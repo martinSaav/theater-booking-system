@@ -1,7 +1,7 @@
 package com.theater.booking.service;
 
 
-import com.theater.booking.interfaces.BaseRepository;
+import com.theater.booking.interfaces.IBaseRepository;
 import com.theater.booking.interfaces.IBaseService;
 import com.theater.booking.model.Base;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,9 +13,9 @@ import java.util.List;
 
 public abstract class BaseService<E extends Base, ID extends Serializable> implements IBaseService<E, ID> {
 
-    protected BaseRepository<E, ID> baseRepository;
+    protected IBaseRepository<E, ID> baseRepository;
 
-    public BaseService(BaseRepository<E, ID> baseRepository) {
+    public BaseService(IBaseRepository<E, ID> baseRepository) {
         this.baseRepository = baseRepository;
     }
 
