@@ -1,7 +1,13 @@
 package com.theater.booking.controller;
 
 
+import com.theater.booking.model.Event;
+import com.theater.booking.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -9,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/events")
 public class EventController {
 
+    @Autowired
+    private EventService eventService;
 
     @GetMapping("/")
-    public String hello() {
-        return "Hello World";
+    public ResponseEntity<List<Event>> getAllEvents() {
+        List<Event> events = eventService.findAll();
+        return ResponseEntity.ok(events);
     }
 }
