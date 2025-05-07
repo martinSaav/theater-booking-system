@@ -29,6 +29,6 @@ public class Event extends Base {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Ticket> tickets;
 }
