@@ -3,6 +3,7 @@ package com.theater.booking.service;
 import com.theater.booking.dto.TicketRequestDTO;
 import com.theater.booking.dto.TicketResponseDTO;
 import com.theater.booking.interfaces.ITicketService;
+import com.theater.booking.model.Event;
 import com.theater.booking.model.Ticket;
 import com.theater.booking.repository.EventRepository;
 import com.theater.booking.repository.TicketRepository;
@@ -40,11 +41,12 @@ public class TicketService implements ITicketService {
     @Override
     public TicketResponseDTO save(TicketRequestDTO dto) {
         Ticket ticket = new Ticket();
+        Event event = findEventById(dto.getEventId());
         ticket.setType(dto.getType());
         ticket.setPrice(dto.getPrice());
         ticket.setTotalStock(dto.getTotalStock());
         ticket.setAvailableStock(dto.getAvailableStock());
-        ticket.setEvent(eventRepository.findById(dto.getEventId()).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + dto.getEventId() + " no existe")));
+        ticket.setEvent(event);
         return new TicketResponseDTO(ticketRepository.save(ticket));
     }
 
@@ -52,10 +54,12 @@ public class TicketService implements ITicketService {
     @Override
     public TicketResponseDTO update(Long id, TicketRequestDTO dto) {
         Ticket ticket = findByIdAux(id);
+        Event event = findEventById(dto.getEventId());
         ticket.setType(dto.getType());
         ticket.setPrice(dto.getPrice());
         ticket.setTotalStock(dto.getTotalStock());
         ticket.setAvailableStock(dto.getAvailableStock());
+        ticket.setEvent(event);
         return new TicketResponseDTO(ticketRepository.save(ticket));
     }
 
@@ -68,6 +72,10 @@ public class TicketService implements ITicketService {
 
     private Ticket findByIdAux(Long id) {
         return ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+    }
+
+    private Event findEventById(Long id) {
+        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
     }
 
 }
