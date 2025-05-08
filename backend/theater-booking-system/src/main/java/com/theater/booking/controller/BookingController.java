@@ -3,11 +3,7 @@ package com.theater.booking.controller;
 
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
-import com.theater.booking.dto.EventRequestDTO;
-import com.theater.booking.dto.EventResponseDTO;
-import com.theater.booking.model.Booking;
 import com.theater.booking.service.BookingService;
-import com.theater.booking.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
