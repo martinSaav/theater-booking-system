@@ -2,17 +2,71 @@ package com.theater.booking.service;
 
 
 
+import com.theater.booking.dto.EventRequestDTO;
+import com.theater.booking.dto.EventResponseDTO;
 import com.theater.booking.interfaces.IEventService;
 import com.theater.booking.model.Event;
 import com.theater.booking.repository.EventRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
-public class EventService extends BaseService<Event, Long> implements IEventService {
+public class EventService implements IEventService {
+
+    private final EventRepository eventRepository;
 
     public EventService(EventRepository eventRepository) {
-        super(eventRepository);
+        this.eventRepository = eventRepository;
+    }
+
+
+    @Override
+    public List<EventResponseDTO> findAll() {
+        return eventRepository.findAll().stream()
+                .map(EventResponseDTO::new)
+                .toList();
+    }
+
+    @Override
+    public EventResponseDTO findById(Long id) {
+        Event event = findByIdAux(id);
+        return new EventResponseDTO(event);
+    }
+
+    @Transactional
+    @Override
+    public EventResponseDTO save(EventRequestDTO dto) {
+        Event event = new Event();
+        event.setName(dto.getName());
+        event.setDateTime(dto.getDateTime());
+        event.setDescription(dto.getDescription());
+        return new EventResponseDTO(eventRepository.save(event));
+    }
+
+    @Transactional
+    @Override
+    public EventResponseDTO update(Long id, EventRequestDTO dto) {
+        Event event = findByIdAux(id);
+        event.setName(dto.getName());
+        event.setDateTime(dto.getDateTime());
+        event.setDescription(dto.getDescription());
+        return new EventResponseDTO(eventRepository.save(event));
+    }
+
+    @Transactional
+    @Override
+    public boolean delete(Long id) {
+        Event event = findByIdAux(id);
+        eventRepository.delete(event);
+        return true;
+    }
+
+    private Event findByIdAux(Long id) {
+        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
     }
 }

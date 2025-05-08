@@ -18,7 +18,7 @@ import java.util.List;
 public class Ticket extends Base {
 
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "type", nullable = false)
     private String type; //GENERAL, VIP, CAMPO, ...
 
     @Column(name = "price", nullable = false)

@@ -1,11 +1,8 @@
 package com.theater.booking.controller;
 
-import com.theater.booking.dto.EventRequestDTO;
-import com.theater.booking.dto.EventResponseDTO;
-import com.theater.booking.dto.TalkRequestDTO;
-import com.theater.booking.dto.TalkResponseDTO;
-import com.theater.booking.service.EventService;
-import com.theater.booking.service.TalkService;
+import com.theater.booking.dto.TicketRequestDTO;
+import com.theater.booking.dto.TicketResponseDTO;
+import com.theater.booking.service.TicketService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,31 +11,31 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/events/talks")
-public class TalkController {
+@RequestMapping("/api/v1/events/tickets")
+public class TicketController {
 
-    private final TalkService service;
+    private final TicketService service;
 
-    public TalkController(TalkService service) {
+    public TicketController(TicketService service) {
         this.service = service;
     }
     @GetMapping("")
-    public ResponseEntity<List<TalkResponseDTO>> getAllRecord() {
+    public ResponseEntity<List<TicketResponseDTO>> getAllRecord() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TalkResponseDTO> getRecordById(@PathVariable Long id) {
+    public ResponseEntity<TicketResponseDTO> getRecordById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<TalkResponseDTO> save(@RequestBody TalkRequestDTO dto) {
+    public ResponseEntity<TicketResponseDTO> save(@RequestBody TicketRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @PutMapping(value = {"", "/{id}"})
-    public ResponseEntity<TalkResponseDTO> update(@PathVariable(required = false) Long id, @RequestBody TalkRequestDTO dto) {
+    public ResponseEntity<TicketResponseDTO> update(@PathVariable(required = false) Long id, @RequestBody TicketRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
     }
 
