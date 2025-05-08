@@ -29,12 +29,15 @@ public class BookingService implements IBookingService {
 
     @Override
     public List<BookingResponseDTO> findAll() {
-        return null;
+        return bookingRepository.findAll().stream()
+                .map(BookingResponseDTO::new)
+                .toList();
     }
 
     @Override
     public BookingResponseDTO findById(Long id) {
-        return null;
+        Booking booking = findByIdAux(id);
+        return new BookingResponseDTO(booking);
     }
 
     @Override
@@ -72,7 +75,9 @@ public class BookingService implements IBookingService {
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        Booking booking = findByIdAux(id);
+        bookingRepository.delete(booking);
+        return true;
     }
 
     Booking findByIdAux(Long id) {
