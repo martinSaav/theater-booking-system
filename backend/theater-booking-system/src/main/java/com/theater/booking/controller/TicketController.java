@@ -19,6 +19,7 @@ public class TicketController {
     public TicketController(TicketService service) {
         this.service = service;
     }
+
     @GetMapping("")
     public ResponseEntity<List<TicketResponseDTO>> getAllRecord() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());

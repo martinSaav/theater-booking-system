@@ -1,14 +1,10 @@
 package com.theater.booking.service;
 
-import com.theater.booking.dto.TalkRequestDTO;
-import com.theater.booking.dto.TalkResponseDTO;
 import com.theater.booking.dto.TicketRequestDTO;
 import com.theater.booking.dto.TicketResponseDTO;
 import com.theater.booking.interfaces.ITicketService;
-import com.theater.booking.model.Talk;
 import com.theater.booking.model.Ticket;
 import com.theater.booking.repository.EventRepository;
-import com.theater.booking.repository.TalkRepository;
 import com.theater.booking.repository.TicketRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -26,7 +22,7 @@ public class TicketService implements ITicketService {
         this.ticketRepository = ticketRepository;
         this.eventRepository = eventRepository;
     }
-    
+
     @Override
     public List<TicketResponseDTO> findAll() {
         return ticketRepository.findAll().stream()

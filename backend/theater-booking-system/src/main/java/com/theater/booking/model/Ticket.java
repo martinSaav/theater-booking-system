@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="ticket")
+@Table(name = "ticket")
 public class Ticket extends Base {
 
 

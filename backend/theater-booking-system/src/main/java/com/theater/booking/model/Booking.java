@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name="booking")
+@Table(name = "booking")
 public class Booking extends Base {
 
     @Column(name = "booking_date", nullable = false)

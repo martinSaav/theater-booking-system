@@ -1,7 +1,9 @@
 package com.theater.booking.model;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="talk")
+@Table(name = "talk")
 public class Talk extends Event {
 
     @Column(name = "has_meet_and_greet", nullable = false)

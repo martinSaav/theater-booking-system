@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="customer")
+@Table(name = "customer")
 public class Customer extends Base {
 
     @Column(name = "name", nullable = false)

@@ -5,7 +5,7 @@ import com.theater.booking.dto.TalkResponseDTO;
 
 import java.util.List;
 
-public interface ITalkService  {
+public interface ITalkService {
 
     List<TalkResponseDTO> findAll();
 

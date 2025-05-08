@@ -1,10 +1,7 @@
 package com.theater.booking.controller;
 
-import com.theater.booking.dto.EventRequestDTO;
-import com.theater.booking.dto.EventResponseDTO;
 import com.theater.booking.dto.TalkRequestDTO;
 import com.theater.booking.dto.TalkResponseDTO;
-import com.theater.booking.service.EventService;
 import com.theater.booking.service.TalkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +19,7 @@ public class TalkController {
     public TalkController(TalkService service) {
         this.service = service;
     }
+
     @GetMapping("")
     public ResponseEntity<List<TalkResponseDTO>> getAllRecord() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());

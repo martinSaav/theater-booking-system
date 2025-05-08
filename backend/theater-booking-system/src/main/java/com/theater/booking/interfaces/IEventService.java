@@ -1,7 +1,6 @@
 package com.theater.booking.interfaces;
 
 
-
 import com.theater.booking.dto.EventRequestDTO;
 import com.theater.booking.dto.EventResponseDTO;
 

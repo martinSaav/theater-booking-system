@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="event")
+@Table(name = "event")
 public class Event extends Base {
 
     @Column(name = "name", nullable = false)

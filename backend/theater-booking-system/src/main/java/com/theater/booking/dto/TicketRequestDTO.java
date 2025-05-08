@@ -1,6 +1,5 @@
 package com.theater.booking.dto;
 
-import com.theater.booking.model.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

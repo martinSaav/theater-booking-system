@@ -1,13 +1,11 @@
 package com.theater.booking.service;
 
 
-
 import com.theater.booking.dto.EventRequestDTO;
 import com.theater.booking.dto.EventResponseDTO;
 import com.theater.booking.interfaces.IEventService;
 import com.theater.booking.model.Event;
 import com.theater.booking.repository.EventRepository;
-
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

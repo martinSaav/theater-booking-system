@@ -3,7 +3,6 @@ package com.theater.booking.controller;
 
 import com.theater.booking.dto.EventRequestDTO;
 import com.theater.booking.dto.EventResponseDTO;
-import com.theater.booking.model.Event;
 import com.theater.booking.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,7 @@ public class EventController {
     public EventController(EventService service) {
         this.service = service;
     }
+
     @GetMapping("")
     public ResponseEntity<List<EventResponseDTO>> getAllRecord() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
