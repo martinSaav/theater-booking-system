@@ -16,9 +16,6 @@ import java.time.LocalDateTime;
 @Table(name = "attendance")
 public class Attendance extends Base {
 
-    @Column(name = "attendance_date", nullable = false)
-    private LocalDateTime attendanceDate;
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
