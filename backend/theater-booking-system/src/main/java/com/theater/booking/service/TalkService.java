@@ -58,7 +58,9 @@ public class TalkService implements ITalkService {
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        Talk talk = findByIdAux(id);
+        talkRepository.delete(talk);
+        return true;
     }
 
     private Talk findByIdAux(Long id) {
