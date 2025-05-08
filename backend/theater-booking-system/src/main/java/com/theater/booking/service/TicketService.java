@@ -61,7 +61,9 @@ public class TicketService implements ITicketService {
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        Ticket ticket = findByIdAux(id);
+        ticketRepository.delete(ticket);
+        return true;
     }
 
     private Ticket findByIdAux(Long id) {
