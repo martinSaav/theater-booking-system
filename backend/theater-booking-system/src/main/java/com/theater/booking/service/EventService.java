@@ -38,26 +38,6 @@ public class EventService implements IEventService {
 
     @Transactional
     @Override
-    public EventResponseDTO save(EventRequestDTO dto) {
-        Event event = new Event();
-        event.setName(dto.getName());
-        event.setDateTime(dto.getDateTime());
-        event.setDescription(dto.getDescription());
-        return new EventResponseDTO(eventRepository.save(event));
-    }
-
-    @Transactional
-    @Override
-    public EventResponseDTO update(Long id, EventRequestDTO dto) {
-        Event event = findByIdAux(id);
-        event.setName(dto.getName());
-        event.setDateTime(dto.getDateTime());
-        event.setDescription(dto.getDescription());
-        return new EventResponseDTO(eventRepository.save(event));
-    }
-
-    @Transactional
-    @Override
     public boolean delete(Long id) {
         Event event = findByIdAux(id);
         eventRepository.delete(event);

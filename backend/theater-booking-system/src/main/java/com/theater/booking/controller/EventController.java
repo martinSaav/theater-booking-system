@@ -32,16 +32,6 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
-    @PostMapping("")
-    public ResponseEntity<EventResponseDTO> save(@RequestBody EventRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
-    }
-
-    @PutMapping(value = {"", "/{id}"})
-    public ResponseEntity<EventResponseDTO> update(@PathVariable(required = false) Long id, @RequestBody EventRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
