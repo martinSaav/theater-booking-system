@@ -42,27 +42,26 @@ public class BookingService implements IBookingService {
 
     @Override
     public BookingResponseDTO save(BookingRequestDTO dto) {
-        Optional<Ticket> ticketOptional = ticketRepository.findById(dto.getTicketId());
-        if (ticketOptional.isEmpty()) {
-            throw new EntityNotFoundException("Ticket not found");
-        }
-        Ticket ticket = ticketOptional.get();
+        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
         Event event = ticket.getEvent();
 
-        Customer customer = new Customer();
-        customer.setEmail(dto.getEmail());
-        customer.setName(dto.getCustomerName());
-        customer.setPhone(dto.getPhone());
-        Customer customerSaved = customerRepository.save(customer);
+        Customer customer = customerRepository.findById(dto.getEmail())
+                .orElseGet(() -> {
+                    Customer newCustomer = new Customer();
+                    newCustomer.setEmail(dto.getEmail());
+                    newCustomer.setName(dto.getCustomerName());
+                    newCustomer.setPhone(dto.getPhone());
+                    return customerRepository.save(newCustomer);
+                });
 
         Attendance attendance = new Attendance();
-        attendance.setCustomer(customerSaved);
+        attendance.setCustomer(customer);
         attendance.setEvent(event);
-        Attendance attendanceSaved = attendanceRepository.save(attendance);
+        attendanceRepository.save(attendance);
 
         Booking booking = new Booking();
         booking.setBookingDate(dto.getBookingDate());
-        booking.setCustomer(customerSaved);
+        booking.setCustomer(customer);
         booking.setTicket(ticket);
         Booking bookingSaved = bookingRepository.save(booking);
 
