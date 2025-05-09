@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,7 +16,11 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "customer")
-public class Customer extends Base {
+public class Customer implements Serializable {
+
+    @Id
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "name", nullable = false)
     private String name;

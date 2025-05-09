@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingRequestDTO {
+    private String email;
     private String customerName;
     private String phone;
     private LocalDateTime bookingDate;

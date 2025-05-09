@@ -20,7 +20,7 @@ public class Booking extends Base {
     private LocalDateTime bookingDate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_email")
     private Customer customer;
 
     @ManyToOne

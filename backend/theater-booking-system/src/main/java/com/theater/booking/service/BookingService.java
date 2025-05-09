@@ -50,6 +50,7 @@ public class BookingService implements IBookingService {
         Event event = ticket.getEvent();
 
         Customer customer = new Customer();
+        customer.setEmail(dto.getEmail());
         customer.setName(dto.getCustomerName());
         customer.setPhone(dto.getPhone());
         Customer customerSaved = customerRepository.save(customer);

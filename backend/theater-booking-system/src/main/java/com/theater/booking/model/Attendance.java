@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Attendance extends Base {
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_email")
     private Customer customer;
 
     @ManyToOne
