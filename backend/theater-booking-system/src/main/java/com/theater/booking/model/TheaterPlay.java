@@ -6,10 +6,13 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
 @Entity
 @Table(name = "theater_play")
 public class TheaterPlay extends Event {
+
 }
