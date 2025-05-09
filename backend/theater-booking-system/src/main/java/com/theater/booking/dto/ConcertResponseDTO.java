@@ -17,7 +17,7 @@ public class ConcertResponseDTO {
     private String dateTime;
     private String description;
 
-    public ConcertResponseDTO(Concert concert){
+    public ConcertResponseDTO(Concert concert) {
         this.id = concert.getId();
         this.name = concert.getName();
         this.dateTime = concert.getDateTime().toString();

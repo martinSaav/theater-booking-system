@@ -4,13 +4,15 @@ import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
 import com.theater.booking.interfaces.IBookingService;
 import com.theater.booking.model.*;
-import com.theater.booking.repository.*;
+import com.theater.booking.repository.AttendanceRepository;
+import com.theater.booking.repository.BookingRepository;
+import com.theater.booking.repository.CustomerRepository;
+import com.theater.booking.repository.TicketRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -21,7 +23,7 @@ public class BookingService implements IBookingService {
     private final AttendanceRepository attendanceRepository;
     private final BookingRepository bookingRepository;
 
-    public BookingService(TicketRepository ticketRepository, CustomerRepository customerRepository, AttendanceRepository attendanceRepository,BookingRepository bookingRepository) {
+    public BookingService(TicketRepository ticketRepository, CustomerRepository customerRepository, AttendanceRepository attendanceRepository, BookingRepository bookingRepository) {
         this.ticketRepository = ticketRepository;
         this.customerRepository = customerRepository;
         this.attendanceRepository = attendanceRepository;

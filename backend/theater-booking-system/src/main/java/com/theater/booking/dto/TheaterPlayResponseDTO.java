@@ -17,7 +17,7 @@ public class TheaterPlayResponseDTO {
     private String dateTime;
     private String description;
 
-    public TheaterPlayResponseDTO(TheaterPlay theaterPlay){
+    public TheaterPlayResponseDTO(TheaterPlay theaterPlay) {
         this.id = theaterPlay.getId();
         this.name = theaterPlay.getName();
         this.dateTime = theaterPlay.getDateTime().toString();
