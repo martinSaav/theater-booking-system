@@ -41,7 +41,6 @@ public class TalkService implements ITalkService {
         talk.setName(dto.getName());
         talk.setDateTime(dto.getDateTime());
         talk.setDescription(dto.getDescription());
-        talk.setHasMeetAndGreet(dto.getHasMeetAndGreet());
         return new TalkResponseDTO(talkRepository.save(talk));
     }
 
@@ -52,7 +51,6 @@ public class TalkService implements ITalkService {
         talk.setName(dto.getName());
         talk.setDateTime(dto.getDateTime());
         talk.setDescription(dto.getDescription());
-        talk.setHasMeetAndGreet(dto.getHasMeetAndGreet());
         return new TalkResponseDTO(talkRepository.save(talk));
     }
 

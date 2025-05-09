@@ -16,14 +16,11 @@ public class TalkResponseDTO {
     private String name;
     private String dateTime;
     private String description;
-    private Boolean hasMeetAndGreet;
 
     public TalkResponseDTO(Talk talk) {
         this.id = talk.getId();
         this.name = talk.getName();
         this.dateTime = talk.getDateTime().toString();
         this.description = talk.getDescription();
-        this.hasMeetAndGreet = talk.getHasMeetAndGreet();
     }
-
 }

@@ -16,5 +16,4 @@ public class TalkRequestDTO {
     private String name;
     private LocalDateTime dateTime;
     private String description;
-    private Boolean hasMeetAndGreet;
 }
