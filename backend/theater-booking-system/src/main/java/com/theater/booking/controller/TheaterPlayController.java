@@ -7,6 +7,9 @@ import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.TheaterPlayService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,14 @@ public class TheaterPlayController {
     }
 
     @GetMapping("")
+    @Operation(
+            description = "Trae todas las obras de teatro",
+            parameters = {},
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<List<TheaterPlayResponseDTO>> getAllRecord() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
@@ -36,6 +47,17 @@ public class TheaterPlayController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            description = "Trae una obra de teatro por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la obra de teatro", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<TheaterPlayResponseDTO> getRecordById(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
@@ -47,6 +69,17 @@ public class TheaterPlayController {
     }
 
     @PostMapping("")
+    @Operation(
+            description = "Crea una obra de teatro",
+            parameters = {
+                    @Parameter(name = "dto", description = "Un dto con los datos de la nueva obra de teatro", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "201"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<TheaterPlayResponseDTO> save(@RequestBody TheaterPlayRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
@@ -58,6 +91,19 @@ public class TheaterPlayController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            description = "Actualiza una obra de teatro por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la obra de teatro", required = true),
+                    @Parameter(name = "dto", description = "Un dto con los datos de la obra de teatro a actualizar", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<TheaterPlayResponseDTO> update(@PathVariable Long id, @RequestBody TheaterPlayRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
@@ -71,6 +117,17 @@ public class TheaterPlayController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            description = "Elimina una obra de teatro por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la obra de teatro", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));

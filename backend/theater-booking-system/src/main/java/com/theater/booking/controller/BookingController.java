@@ -8,6 +8,9 @@ import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.BookingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,14 @@ public class BookingController {
     }
 
     @GetMapping("")
+    @Operation(
+            description = "Trae todas las reservas",
+            parameters = {},
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<List<BookingResponseDTO>> getAllRecord() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
@@ -37,6 +48,17 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            description = "Trae una reserva por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la reserva", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<BookingResponseDTO> getRecordById(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
@@ -48,6 +70,17 @@ public class BookingController {
     }
 
     @PostMapping("")
+    @Operation(
+            description = "Crea una reserva",
+            parameters = {
+                    @Parameter(name = "dto", description = "Un dto con los datos de la nueva reserva", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "201"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<BookingResponseDTO> save(@RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
@@ -59,6 +92,19 @@ public class BookingController {
     }
 
     @PutMapping( "/{id}")
+    @Operation(
+            description = "Actualiza una reserva por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la reserva", required = true),
+                    @Parameter(name = "dto", description = "Un dto con los datos de la reserva a actualizar", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
@@ -72,6 +118,17 @@ public class BookingController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            description = "Elimina una reserva por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la reserva", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));

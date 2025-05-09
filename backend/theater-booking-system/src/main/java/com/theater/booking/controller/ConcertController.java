@@ -7,6 +7,9 @@ import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.ConcertService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,14 @@ public class ConcertController {
     }
 
     @GetMapping("")
+    @Operation(
+            description = "Trae todos los conciertos",
+            parameters = {},
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<List<ConcertResponseDTO>> getAllRecord() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
@@ -36,6 +47,17 @@ public class ConcertController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            description = "Trae un concierto por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id del concierto", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<ConcertResponseDTO> getRecordById(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
@@ -47,6 +69,17 @@ public class ConcertController {
     }
 
     @PostMapping("")
+    @Operation(
+            description = "Crea un concierto",
+            parameters = {
+                    @Parameter(name = "dto", description = "Un dto con los datos del nuevo concierto", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "201"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<ConcertResponseDTO> save(@RequestBody ConcertRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
@@ -58,6 +91,19 @@ public class ConcertController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            description = "Actualiza un concierto por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id del concierto", required = true),
+                    @Parameter(name = "dto", description = "Un dto con los datos del concierto a actualizar", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<ConcertResponseDTO> update(@PathVariable Long id, @RequestBody ConcertRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
@@ -71,6 +117,17 @@ public class ConcertController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            description = "Elimina un concierto por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id del concierto", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));

@@ -29,11 +29,11 @@ public class EventController {
 
     @GetMapping("")
     @Operation(
-            description = "Trae todos los eventoss",
+            description = "Trae todos los eventos",
             parameters = {},
             responses = {
-                    @ApiResponse(responseCode = "200", ref = "ok"),
-                    @ApiResponse(responseCode = "500", ref = "internalServerError")
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "500")
             }
     )
     public ResponseEntity<List<EventResponseDTO>> getAllRecord() {
@@ -46,14 +46,14 @@ public class EventController {
 
     @GetMapping("/{id}")
     @Operation(
-            description = "Trae un eventos por id",
+            description = "Trae un evento por id",
             parameters = {
-                    @Parameter(name = "id", description = "Id del eventos", required = true)
+                    @Parameter(name = "id", description = "Id del evento", required = true)
             },
             responses = {
-                    @ApiResponse(responseCode = "200", ref = "ok"),
-                    @ApiResponse(responseCode = "404", ref = "notFound"),
-                    @ApiResponse(responseCode = "500", ref = "internalError")
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
             }
     )
     public ResponseEntity<EventResponseDTO> getRecordById(@PathVariable Long id) {
@@ -68,14 +68,14 @@ public class EventController {
 
     @DeleteMapping("/{id}")
     @Operation(
-            description = "Elimina un eventos por id",
+            description = "Elimina un evento por id",
             parameters = {
-                    @Parameter(name = "id", description = "Id del eventos", required = true)
+                    @Parameter(name = "id", description = "Id del evento", required = true)
             },
             responses = {
-                    @ApiResponse(responseCode = "204", ref = "noContent"),
-                    @ApiResponse(responseCode = "404", ref = "notFound"),
-                    @ApiResponse(responseCode = "500", ref = "internalError")
+                    @ApiResponse(responseCode = "204"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
             }
     )
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {

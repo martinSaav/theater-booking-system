@@ -6,6 +6,9 @@ import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.TalkService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,14 @@ public class TalkController {
     }
 
     @GetMapping("")
+    @Operation(
+            description = "Trae todas las charlas",
+            parameters = {},
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<List<TalkResponseDTO>> getAllRecord() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
@@ -35,6 +46,17 @@ public class TalkController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            description = "Trae una charla por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la charla", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<TalkResponseDTO> getRecordById(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
@@ -46,6 +68,17 @@ public class TalkController {
     }
 
     @PostMapping("")
+    @Operation(
+            description = "Crea una charla",
+            parameters = {
+                    @Parameter(name = "dto", description = "Un dto con los datos de la nueva charla", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "201"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<TalkResponseDTO> save(@RequestBody TalkRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
@@ -57,6 +90,19 @@ public class TalkController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            description = "Actualiza una charla por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la charla", required = true),
+                    @Parameter(name = "dto", description = "Un dto con los datos de la charla a actualizar", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<TalkResponseDTO> update(@PathVariable Long id, @RequestBody TalkRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
@@ -70,6 +116,17 @@ public class TalkController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            description = "Elimina una charla por id",
+            parameters = {
+                    @Parameter(name = "id", description = "Id de la charla", required = true)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204"),
+                    @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
