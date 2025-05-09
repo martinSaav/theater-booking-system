@@ -6,6 +6,7 @@ import com.theater.booking.interfaces.IBookingService;
 import com.theater.booking.model.*;
 import com.theater.booking.repository.*;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,11 +41,17 @@ public class BookingService implements IBookingService {
         return new BookingResponseDTO(booking);
     }
 
+    @Transactional
     @Override
     public BookingResponseDTO save(BookingRequestDTO dto) {
         Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
-        Event event = ticket.getEvent();
+        if (ticket.getAvailableStock() <= 0) {
+            throw new IllegalStateException("No tickets available");
+        }
+        ticket.setAvailableStock(ticket.getAvailableStock() - 1);
+        ticketRepository.save(ticket);
 
+        Event event = ticket.getEvent();
         Customer customer = customerRepository.findById(dto.getEmail())
                 .orElseGet(() -> {
                     Customer newCustomer = new Customer();
