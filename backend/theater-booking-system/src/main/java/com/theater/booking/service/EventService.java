@@ -30,6 +30,18 @@ public class EventService implements IEventService {
     }
 
     @Override
+    public List<EventResponseDTO> findAllAvailable() {
+        return eventRepository.findAll().stream()
+                .map(EventResponseDTO::new)
+                .filter(
+                        event -> event.getTickets().stream()
+                                .anyMatch(ticket -> ticket.getAvailableStock() > 0)
+                )
+                .toList();
+    }
+
+
+    @Override
     public EventResponseDTO findById(Long id) {
         Event event = findByIdAux(id);
         return new EventResponseDTO(event);

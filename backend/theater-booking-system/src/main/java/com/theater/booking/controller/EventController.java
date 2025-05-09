@@ -44,6 +44,23 @@ public class EventController {
         }
     }
 
+    @GetMapping("")
+    @Operation(
+            description = "Trae todos los eventos disponibles",
+            parameters = {},
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "500")
+            }
+    )
+    public ResponseEntity<List<EventResponseDTO>> getAllRecordAvailable() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(service.findAllAvailable());
+        } catch (Exception e) {
+            throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{id}")
     @Operation(
             description = "Trae un evento por id",

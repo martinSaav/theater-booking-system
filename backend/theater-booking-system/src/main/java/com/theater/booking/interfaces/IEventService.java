@@ -9,6 +9,8 @@ public interface IEventService {
 
     List<EventResponseDTO> findAll();
 
+    List<EventResponseDTO> findAllAvailable();
+
     EventResponseDTO findById(Long id);
 
     boolean delete(Long id);
