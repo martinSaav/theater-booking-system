@@ -1,99 +1,51 @@
 package com.theater.booking.config;
 
-
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.examples.Example;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 
-
-@OpenAPIDefinition
 @Configuration
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI getApiInfo() {
-
-        ApiResponse okAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 200, \"Status\" : \"Ok!\", \"Message\" : \"Traido con exito!\"}")))
-        );
-
-        ApiResponse updatedAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 200, \"Status\" : \"Ok!\", \"Message\" : \"Se actualizo un registro!\"}")))
-        );
-
-        ApiResponse createdAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 201, \"Status\" : \"Created!\", \"Message\" : \"Se creo un registro con exito!\"}")))
-        );
-
-        ApiResponse noContentAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 204, \"Status\" : \"NoContent!\", \"Message\" : \"No hay contenido con que responder!\"}")))
-        );
-        ApiResponse badRequestAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 400, \"Status\" : \"BadRequest!\", \"Message\" : \"El request no es valido!\"}")))
-        );
-
-        ApiResponse unauthorizedAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 401, \"Status\" : \"Unauthorized!\", \"Message\" : \"Las credenciales no son validas!\"}")))
-        );
-
-        ApiResponse notFoundAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 404, \"Status\" : \"NotFound!\", \"Message\" : \"No se encontro ningun registro!\"}")))
-        );
-
-        ApiResponse internalServerErrorAPI = new ApiResponse().content(
-                new Content().addMediaType(MediaType.APPLICATION_JSON_VALUE,
-                        new io.swagger.v3.oas.models.media.MediaType().addExamples("default",
-                                new Example().value("{\"code\" : 500, \"Status\" : \"InternalServerError!\", \"Message\" : \"Un error inesperado ocurrio en el servidor!\"}")))
-        );
-
+    public OpenAPI customOpenAPI() {
         Components components = new Components();
-        components.addResponses("okAPI", okAPI);
-        components.addResponses("notFoundAPI", notFoundAPI);
-        components.addResponses("createdAPI", createdAPI);
-        components.addResponses("UnauthorizedAPI", unauthorizedAPI);
-        components.addResponses("badRequestAPI", badRequestAPI);
-        components.addResponses("updatedAPI", updatedAPI);
-        components.addResponses("noContentAPI", noContentAPI);
-        components.addResponses("internalServerErrorAPI", internalServerErrorAPI);
+
+        components.addResponses("ok", createResponse("200 OK", "{\"status\":\"success\",\"message\":\"Retrieved successfully\"}"));
+        components.addResponses("created", createResponse("201 Created", "{\"status\":\"success\",\"message\":\"Created successfully\"}"));
+        components.addResponses("noContent", createResponse("204 No Content", "{\"status\":\"success\",\"message\":\"No content\"}"));
+        components.addResponses("badRequest", createResponse("400 Bad Request", "{\"status\":\"error\",\"message\":\"Invalid input\"}"));
+        components.addResponses("notFound", createResponse("404 Not Found", "{\"status\":\"error\",\"message\":\"Resource not found\"}"));
+        components.addResponses("internalError", createResponse("500 Internal Server Error", "{\"status\":\"error\",\"message\":\"Unexpected server error\"}"));
 
         return new OpenAPI()
-                .openapi("3.0.1")
-                .components(components)
                 .info(new Info()
-                        .title("Theater Booking system API")
-                        .version("v1")
-                        .description("This is a REST API for a theater booking system.")
-                        .termsOfService("https://swagger.io/terms/")
+                        .title("Theater Booking System API")
+                        .version("1.0.0")
+                        .description("REST API for managing theater events, customers, and bookings.")
                         .contact(new Contact()
                                 .name("Martin Alejandro Estrada Saavedra")
-                                .email("martin996@hotmail.com.ar")
-                                .url("https://github.com/martinSaav"))
+                                .url("https://github.com/martinSaav")
+                                .email("martin996@hotmail.com.ar"))
                         .license(new License()
                                 .name("Apache 2.0")
                                 .url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-                );
+                )
+                .components(components);
+    }
+
+    private ApiResponse createResponse(String description, String exampleJson) {
+        return new ApiResponse()
+                .description(description)
+                .content(new Content().addMediaType("application/json",
+                        new MediaType().addExamples("default", new Example().value(exampleJson))));
     }
 }
