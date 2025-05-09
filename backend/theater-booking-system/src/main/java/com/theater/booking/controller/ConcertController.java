@@ -58,7 +58,7 @@ public class ConcertController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConcertResponseDTO> update(@PathVariable(required = false) Long id, @RequestBody ConcertRequestDTO dto) {
+    public ResponseEntity<ConcertResponseDTO> update(@PathVariable Long id, @RequestBody ConcertRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
         } catch (DataIntegrityViolationException e) {

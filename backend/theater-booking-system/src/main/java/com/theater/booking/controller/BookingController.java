@@ -59,7 +59,7 @@ public class BookingController {
     }
 
     @PutMapping( "/{id}")
-    public ResponseEntity<BookingResponseDTO> update(@PathVariable(required = false) Long id, @RequestBody BookingRequestDTO dto) {
+    public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
         } catch (DataIntegrityViolationException e) {
