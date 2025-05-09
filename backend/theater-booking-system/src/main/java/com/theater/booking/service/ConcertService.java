@@ -55,6 +55,7 @@ public class ConcertService implements IConcertService {
         return new ConcertResponseDTO(concertRepository.save(concert));
     }
 
+    @Transactional
     @Override
     public boolean delete(Long id) {
         Concert concert = findByIdAux(id);

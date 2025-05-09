@@ -75,11 +75,13 @@ public class BookingService implements IBookingService {
         return new BookingResponseDTO(bookingSaved);
     }
 
+    @Transactional
     @Override
     public BookingResponseDTO update(Long id, BookingRequestDTO dto) {
         return null;
     }
 
+    @Transactional
     @Override
     public boolean delete(Long id) {
         Booking booking = findByIdAux(id);

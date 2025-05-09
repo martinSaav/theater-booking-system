@@ -63,6 +63,7 @@ public class TicketService implements ITicketService {
         return new TicketResponseDTO(ticketRepository.save(ticket));
     }
 
+    @Transactional
     @Override
     public boolean delete(Long id) {
         Ticket ticket = findByIdAux(id);

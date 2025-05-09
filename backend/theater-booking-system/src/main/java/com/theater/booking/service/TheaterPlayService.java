@@ -54,6 +54,7 @@ public class TheaterPlayService implements ITheaterPlayService {
         return new TheaterPlayResponseDTO(theaterPlayRepository.save(theaterPlay));
     }
 
+    @Transactional
     @Override
     public boolean delete(Long id) {
         TheaterPlay theaterPlay = findByIdAux(id);
