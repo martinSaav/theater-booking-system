@@ -44,7 +44,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping("/available")
     @Operation(
             description = "Trae todos los eventos disponibles",
             parameters = {},
