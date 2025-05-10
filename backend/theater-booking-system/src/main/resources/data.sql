@@ -1,3 +1,4 @@
+-- Datos de prueba
 INSERT INTO event (id, name, date_time, description)
 SELECT 1, 'Concierto Soda Stereo', '2025-09-10 18:00:00', 'Un concierto de otro mundo'
     WHERE NOT EXISTS (SELECT 1 FROM event WHERE id = 1);
@@ -76,3 +77,9 @@ SELECT 'General', 15000, 50000, 50000, 5
 INSERT INTO ticket (type, price, total_stock, available_stock, event_id)
 SELECT 'VIP', 35000, 5000, 5000, 5
     WHERE NOT EXISTS (SELECT 1 FROM ticket WHERE event_id = 5 AND type = 'VIP');
+
+SELECT setval(pg_get_serial_sequence('event', 'id'), (SELECT MAX(id) FROM event));
+SELECT setval(pg_get_serial_sequence('ticket', 'id'), (SELECT MAX(id) FROM ticket));
+SELECT setval(pg_get_serial_sequence('concert', 'id'), (SELECT MAX(id) FROM concert));
+SELECT setval(pg_get_serial_sequence('talk', 'id'), (SELECT MAX(id) FROM talk));
+SELECT setval(pg_get_serial_sequence('theater_play', 'id'), (SELECT MAX(id) FROM theater_play));
