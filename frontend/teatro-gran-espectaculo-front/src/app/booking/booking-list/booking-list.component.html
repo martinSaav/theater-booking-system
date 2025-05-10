@@ -1,18 +1,17 @@
 <h2>Booking Management</h2>
-<form (ngSubmit)="createBooking()">
-    <label>
-    Name:
-    <input [(ngModel)]="customerName" name="customer" required />
-    </label>
-    <label>
-    Event:
-    <input [(ngModel)]="eventName" name="event" required />
-    </label>
-    <button type="submit">Add Booking</button>
-</form>
+    <form (ngSubmit)="createBooking()">
+      <label>Email: <input [(ngModel)]="email" name="email" required /></label>
+      <label>Name: <input [(ngModel)]="customerName" name="customerName" required /></label>
+      <label>Phone: <input [(ngModel)]="phone" name="phone" required /></label>
+      <label>Date: <input [(ngModel)]="bookingDate" name="bookingDate" type="datetime-local" required /></label>
+      <label>Ticket ID: <input [(ngModel)]="ticketId" name="ticketId" type="number" required /></label>
+      <button type="submit">Add Reservation</button>
+    </form>
 
 <ul>
-    <li *ngFor="let booking of bookings">
-    {{ booking.customer }} reserved for {{ booking.event }}
-    </li>
+    <ul>
+      <li *ngFor="let booking of bookings">
+        {{ booking.customerName }} booked ticket #{{ booking.ticketId }} for {{ booking.bookingDate | date:'short' }}
+      </li>
+    </ul>
 </ul>
