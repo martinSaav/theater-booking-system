@@ -1,1 +1,18 @@
-<p>booking-list works!</p>
+<h2>Booking Management</h2>
+<form (ngSubmit)="createBooking()">
+    <label>
+    Name:
+    <input [(ngModel)]="customerName" name="customer" required />
+    </label>
+    <label>
+    Event:
+    <input [(ngModel)]="eventName" name="event" required />
+    </label>
+    <button type="submit">Add Booking</button>
+</form>
+
+<ul>
+    <li *ngFor="let booking of bookings">
+    {{ booking.customer }} reserved for {{ booking.event }}
+    </li>
+</ul>

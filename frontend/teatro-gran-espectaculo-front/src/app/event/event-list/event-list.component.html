@@ -1,1 +1,22 @@
-<p>event-list works!</p>
+    <h2>Event Management</h2>
+    <form (ngSubmit)="createEvent()">
+      <label>
+        Name:
+        <input [(ngModel)]="eventName" name="name" required />
+      </label>
+      <label>
+        Date:
+        <input [(ngModel)]="eventDate" name="date" type="date" required />
+      </label>
+      <label>
+        Description:
+        <input [(ngModel)]="eventDescription" name="description" />
+      </label>
+      <button type="submit">Create Event</button>
+    </form>
+
+    <ul>
+      <li *ngFor="let event of events">
+        {{ event.name }} - {{ event.date }}
+      </li>
+    </ul>
