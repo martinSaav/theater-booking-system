@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { EventService } from '../../_services/event.service';
+import { Event } from '../../_models/event';
 
 @Component({
   selector: 'app-event-list',
@@ -9,23 +11,32 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.scss'
 })
-export class EventListComponent {
+export class EventListComponent implements OnInit {
   eventName = '';
   eventDate = '';
   eventDescription = '';
+  events: Event[] = [];
 
-  events = [
-    { name: 'Evento de ejemplo', date: '2025-10-01', description: 'mmm' }
-  ];
+  constructor(private eventService: EventService) {}
+
+  ngOnInit() {
+    this.eventService.getAllEvents().subscribe(events => {
+      this.events = events;
+    });
+  }
 
   createEvent() {
-    this.events.push({
+    const newEvent: Event = {
       name: this.eventName,
-      date: this.eventDate,
+      dateTime: this.eventDate,
       description: this.eventDescription
+    };
+
+    this.eventService.createEvent(newEvent).subscribe(saved => {
+      this.events.push(saved);
+      this.eventName = '';
+      this.eventDate = '';
+      this.eventDescription = '';
     });
-    this.eventName = '';
-    this.eventDate = '';
-    this.eventDescription = '';
   }
 }

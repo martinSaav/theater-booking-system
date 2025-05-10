@@ -6,7 +6,7 @@
       </label>
       <label>
         Date:
-        <input [(ngModel)]="eventDate" name="date" type="date" required />
+        <input [(ngModel)]="eventDate" name="date" type="datetime-local" required />
       </label>
       <label>
         Description:
@@ -17,6 +17,6 @@
 
     <ul>
       <li *ngFor="let event of events">
-        {{ event.name }} - {{ event.date }}
+        {{ event.name }} - {{ event.dateTime | date:'short' }}
       </li>
     </ul>
