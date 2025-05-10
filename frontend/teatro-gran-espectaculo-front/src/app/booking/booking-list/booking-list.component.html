@@ -1,17 +1,50 @@
-<h2>Booking Management</h2>
-    <form (ngSubmit)="createBooking()">
-      <label>Email: <input [(ngModel)]="email" name="email" required /></label>
-      <label>Name: <input [(ngModel)]="customerName" name="customerName" required /></label>
-      <label>Phone: <input [(ngModel)]="phone" name="phone" required /></label>
-      <label>Date: <input [(ngModel)]="bookingDate" name="bookingDate" type="datetime-local" required /></label>
-      <label>Ticket ID: <input [(ngModel)]="ticketId" name="ticketId" type="number" required /></label>
-      <button type="submit">Add Reservation</button>
+ <h2 class="mb-4">Manage Booking</h2>
+    <form class="mb-4" (ngSubmit)="createBooking()">
+      <div class="mb-3">
+        <label class="form-label">Customer Name</label>
+        <input type="text" class="form-control" [(ngModel)]="customerName" name="customerName" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-control" [(ngModel)]="phone" name="phone" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Booking Date</label>
+        <input type="datetime-local" class="form-control" [(ngModel)]="bookingDate" name="bookingDate" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Ticket ID</label>
+        <input type="number" class="form-control" [(ngModel)]="ticketId" name="ticketId" required>
+      </div>
+      <button class="btn btn-success" type="submit">Create Reservation</button>
     </form>
 
-<ul>
-    <ul>
-      <li *ngFor="let booking of bookings">
-        {{ booking.customerName }} booked ticket #{{ booking.ticketId }} for {{ booking.bookingDate | date:'short' }}
-      </li>
-    </ul>
-</ul>
+    <table class="table table-striped" *ngIf="bookings.length">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Booking Date</th>
+          <th>Ticket ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.customerName }}</td>
+          <td>{{ booking.email }}</td>
+          <td>{{ booking.phone }}</td>
+          <td>{{ booking.bookingDate }}</td>
+          <td>{{ booking.ticketId }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
