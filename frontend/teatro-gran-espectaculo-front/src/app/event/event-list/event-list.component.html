@@ -1,4 +1,4 @@
-    <h2>Event Management</h2>
+<h2>Event Management</h2>
     <form (ngSubmit)="createEvent()">
       <label>
         Name:
@@ -11,6 +11,14 @@
       <label>
         Description:
         <input [(ngModel)]="eventDescription" name="description" />
+      </label>
+      <label>
+        Type:
+        <select [(ngModel)]="eventType" name="type" required>
+          <option value="theater-plays">Theater Play</option>
+          <option value="concerts">Concert</option>
+          <option value="talks">Talk</option>
+        </select>
       </label>
       <button type="submit">Create Event</button>
     </form>

@@ -7,14 +7,35 @@ import { Event } from '../_models/event';
   providedIn: 'root'
 })
 export class EventService {
-  private http = inject(HttpClient);
+private http = inject(HttpClient);
+
   private baseUrl = 'http://localhost:8080/api/v1/events';
 
   getAllEvents() {
     return this.http.get<Event[]>(this.baseUrl);
   }
 
-  createEvent(event: Event) {
-    return this.http.post<Event>(this.baseUrl, event);
+  getAllTheaterPlays() {
+    return this.http.get<Event[]>(`${this.baseUrl}/theater-plays`);
+  }
+
+  getAllConcerts() {
+    return this.http.get<Event[]>(`${this.baseUrl}/concerts`);
+  }
+
+  getAllTalks() {
+    return this.http.get<Event[]>(`${this.baseUrl}/talks`);
+  }
+
+  createTheaterPlay(event: Event) {
+    return this.http.post<Event>(`${this.baseUrl}/theater-plays`, event);
+  }
+
+  createConcert(event: Event) {
+    return this.http.post<Event>(`${this.baseUrl}/concerts`, event);
+  }
+
+  createTalk(event: Event) {
+    return this.http.post<Event>(`${this.baseUrl}/talks`, event);
   }
 }

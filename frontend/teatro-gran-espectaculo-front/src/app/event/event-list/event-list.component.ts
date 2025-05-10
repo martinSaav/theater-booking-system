@@ -15,9 +15,10 @@ export class EventListComponent implements OnInit {
   eventName = '';
   eventDate = '';
   eventDescription = '';
+  eventType = 'theater-plays';
   events: Event[] = [];
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
     this.eventService.getAllEvents().subscribe(events => {
@@ -32,11 +33,24 @@ export class EventListComponent implements OnInit {
       description: this.eventDescription
     };
 
-    this.eventService.createEvent(newEvent).subscribe(saved => {
+    const creatorMap = {
+      'theater-plays': () => this.eventService.createTheaterPlay(newEvent),
+      'concerts': () => this.eventService.createConcert(newEvent),
+      'talks': () => this.eventService.createTalk(newEvent),
+    };
+
+    this.getFromMap(creatorMap, this.eventType)().subscribe(saved => {
       this.events.push(saved);
       this.eventName = '';
       this.eventDate = '';
       this.eventDescription = '';
     });
+  }
+
+  private getFromMap<K extends string, V>(
+    map: Record<K, V>,
+    key: K
+  ): V {
+    return map[key];
   }
 }
