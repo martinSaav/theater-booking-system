@@ -23,7 +23,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5433"
+      - "5432:5432"
     networks:
       - theater-net
     volumes:
