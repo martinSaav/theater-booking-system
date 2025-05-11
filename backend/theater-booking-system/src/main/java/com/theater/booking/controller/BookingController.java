@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +80,7 @@ public class BookingController {
                     @ApiResponse(responseCode = "500")
             }
     )
-    public ResponseEntity<BookingResponseDTO> save(@RequestBody BookingRequestDTO dto) {
+    public ResponseEntity<BookingResponseDTO> save(@Valid @RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
         } catch (BusinessException e) {
@@ -104,7 +105,7 @@ public class BookingController {
                     @ApiResponse(responseCode = "500")
             }
     )
-    public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
+    public ResponseEntity<BookingResponseDTO> update(@Valid @PathVariable Long id, @RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
         } catch (BusinessException e) {

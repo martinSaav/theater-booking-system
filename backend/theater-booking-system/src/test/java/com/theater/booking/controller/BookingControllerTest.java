@@ -45,4 +45,53 @@ class BookingControllerTest {
 
         verify(bookingService, times(1)).findAll();
     }
+
+    @Test
+    void testCreateBooking() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO(
+                "Martín", "martin@example.com", "123456789", 1L
+        );
+
+        BookingResponseDTO response = new BookingResponseDTO();
+        response.setId(1L);
+        response.setCustomerName("Martín");
+        response.setCustomerEmail("martin996@hotmail.com.ar");
+        response.setCustomerPhone("1168940114");
+        response.setTicketId(1L);
+        response.setTicketType("General");
+        response.setTicketPrice(2000.0);
+        response.setEventName("Java Conf");
+        response.setEventDate("2025-05-10T18:00");
+        response.setBookingDate("2025-05-10T10:00:00");
+
+        when(bookingService.save(any(BookingRequestDTO.class))).thenReturn(response);
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.customerName").value("Martín"))
+                .andExpect(jsonPath("$.customerEmail").value("martin996@hotmail.com.ar"))
+                .andExpect(jsonPath("$.customerPhone").value("1168940114"))
+                .andExpect(jsonPath("$.eventName").value("Java Conf"))
+                .andExpect(jsonPath("$.eventDate").value("2025-05-10T18:00"))
+                .andExpect(jsonPath("$.bookingDate").value("2025-05-10T10:00:00"))
+                .andExpect(jsonPath("$.ticketId").value(1L))
+                .andExpect(jsonPath("$.ticketType").value("General"))
+                .andExpect(jsonPath("$.ticketPrice").value(2000.0));
+
+        verify(bookingService, times(1)).save(any(BookingRequestDTO.class));
+    }
+
+    @Test
+    void testCreateBookingInvalidInput() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO("", "", "", null);
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
 }
