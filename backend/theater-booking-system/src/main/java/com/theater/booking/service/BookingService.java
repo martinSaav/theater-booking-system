@@ -47,6 +47,9 @@ public class BookingService implements IBookingService {
     @Transactional
     @Override
     public BookingResponseDTO save(BookingRequestDTO dto) {
+        if (dto.getCustomerEmail() == null || dto.getCustomerName() == null || dto.getCustomerPhone() == null) {
+            throw new IllegalArgumentException("Customer details are required");
+        }
         Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
         if (ticket.getAvailableStock() <= 0) {
             throw new IllegalStateException("No tickets available");

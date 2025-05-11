@@ -3,10 +3,7 @@ package com.theater.booking.controller;
 
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
-import com.theater.booking.exceptions.BookingNotFoundException;
-import com.theater.booking.exceptions.EventNotFoundException;
-import com.theater.booking.exceptions.NotValidBodyException;
-import com.theater.booking.exceptions.UnknownErrorException;
+import com.theater.booking.exceptions.*;
 import com.theater.booking.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -102,14 +99,17 @@ public class BookingController {
                     @ApiResponse(responseCode = "200"),
                     @ApiResponse(responseCode = "400"),
                     @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "409"),
                     @ApiResponse(responseCode = "500")
             }
     )
     public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
             throw new NotValidBodyException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (IllegalStateException e) {
+            throw new NotMoreAvailableTickets(e.getMessage(), HttpStatus.CONFLICT);
         } catch (EntityNotFoundException e) {
             throw new BookingNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
