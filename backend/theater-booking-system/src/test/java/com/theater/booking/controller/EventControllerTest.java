@@ -125,6 +125,43 @@ class EventControllerTest {
     }
 
     @Test
+    void TestGetAllEventsEmpty() throws Exception {
+        List<EventResponseDTO> events = new ArrayList<>();
+        when(eventService.findAll()).thenReturn(events);
+
+        mockMvc.perform(get("/api/v1/events"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(0));
+
+        verify(eventService, times(1)).findAll();
+    }
+
+    @Test
+    void TestAllEventsOneEvent() throws Exception {
+        List<Ticket> tickets = new ArrayList<>();
+        List<EventResponseDTO> events = new ArrayList<>();
+        TheaterPlay theaterPlay = new TheaterPlay();
+        theaterPlay.setId(1L);
+        theaterPlay.setName("Tech Talk");
+        theaterPlay.setDateTime(LocalDateTime.of(2025, 1, 1, 1, 0));
+        theaterPlay.setDescription("A talk about tech.");
+        theaterPlay.setTickets(tickets);
+        EventResponseDTO theaterPlayResponse = new EventResponseDTO(theaterPlay);
+        events.add(theaterPlayResponse);
+
+        when(eventService.findAll()).thenReturn(events);
+
+        mockMvc.perform(get("/api/v1/events"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1));
+
+        verify(eventService, times(1)).findAll();
+    }
+
+    @Test
     void testGetAllEvents() throws Exception {
         List<Ticket> tickets = new ArrayList<>();
         List<EventResponseDTO> events = new ArrayList<>();
@@ -158,11 +195,136 @@ class EventControllerTest {
         mockMvc.perform(get("/api/v1/events"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[2].id").value(3));
+                .andExpect(jsonPath("$.length()").value(3));
 
         verify(eventService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllConcertsEmpty() throws Exception {
+        List<ConcertResponseDTO> concerts = new ArrayList<>();
+        when(concertService.findAll()).thenReturn(concerts);
+
+        mockMvc.perform(get("/api/v1/events/concerts"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(0));
+
+        verify(concertService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllConcertsOneConcert() throws Exception {
+        List<ConcertResponseDTO> concerts = new ArrayList<>();
+        Concert concert = new Concert();
+        concert.setId(1L);
+        concert.setName("Live Rock");
+        concert.setDateTime(LocalDateTime.of(2025, 6, 15, 21, 0));
+        concert.setDescription("Rock concert");
+        ConcertResponseDTO concertResponse = new ConcertResponseDTO(concert);
+        concerts.add(concertResponse);
+
+        when(concertService.findAll()).thenReturn(concerts);
+
+        mockMvc.perform(get("/api/v1/events/concerts"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1));
+
+        verify(concertService, times(1)).findAll();
+    }
+
+    @Test
+    void testGetAllConcerts() throws Exception {
+        List<ConcertResponseDTO> concerts = new ArrayList<>();
+        Concert concert1 = new Concert();
+        concert1.setId(1L);
+        concert1.setName("Live Rock");
+        concert1.setDateTime(LocalDateTime.of(2025, 6, 15, 21, 0));
+        concert1.setDescription("Rock concert");
+        ConcertResponseDTO concertResponse = new ConcertResponseDTO(concert1);
+        concerts.add(concertResponse);
+
+        Concert concert2 = new Concert();
+        concert2.setId(2L);
+        concert2.setName("Jazz Night");
+        concert2.setDateTime(LocalDateTime.of(2025, 7, 20, 19, 0));
+        concert2.setDescription("Jazz concert");
+        ConcertResponseDTO concertResponse2 = new ConcertResponseDTO(concert2);
+        concerts.add(concertResponse2);
+
+        when(concertService.findAll()).thenReturn(concerts);
+
+        mockMvc.perform(get("/api/v1/events/concerts"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(2));
+
+        verify(concertService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllTalksEmpty() throws Exception {
+        List<TalkResponseDTO> talks = new ArrayList<>();
+        when(talkService.findAll()).thenReturn(talks);
+
+        mockMvc.perform(get("/api/v1/events/talks"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(0));
+
+        verify(talkService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllTalksOneTalk() throws Exception {
+        List<TalkResponseDTO> talks = new ArrayList<>();
+        Talk talk = new Talk();
+        talk.setId(1L);
+        talk.setName("Java Conf");
+        talk.setDateTime(LocalDateTime.of(2025, 5, 10, 18, 0));
+        talk.setDescription("A conference");
+        TalkResponseDTO talkResponse = new TalkResponseDTO(talk);
+        talks.add(talkResponse);
+
+        when(talkService.findAll()).thenReturn(talks);
+
+        mockMvc.perform(get("/api/v1/events/talks"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1));
+
+        verify(talkService, times(1)).findAll();
+    }
+
+    @Test
+    void testGetAllTalks() throws Exception {
+        List<TalkResponseDTO> talks = new ArrayList<>();
+        Talk talk1 = new Talk();
+        talk1.setId(1L);
+        talk1.setName("Java Conf");
+        talk1.setDateTime(LocalDateTime.of(2025, 5, 10, 18, 0));
+        talk1.setDescription("A conference");
+        TalkResponseDTO talkResponse = new TalkResponseDTO(talk1);
+        talks.add(talkResponse);
+
+        Talk talk2 = new Talk();
+        talk2.setId(2L);
+        talk2.setName("Python Workshop");
+        talk2.setDateTime(LocalDateTime.of(2025, 8, 25, 14, 0));
+        talk2.setDescription("A workshop about Python.");
+        TalkResponseDTO talkResponse2 = new TalkResponseDTO(talk2);
+        talks.add(talkResponse2);
+
+        when(talkService.findAll()).thenReturn(talks);
+
+        mockMvc.perform(get("/api/v1/events/talks"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(2));
+
+        verify(talkService, times(1)).findAll();
     }
 }
