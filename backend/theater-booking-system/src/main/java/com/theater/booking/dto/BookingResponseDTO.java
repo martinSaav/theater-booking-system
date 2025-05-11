@@ -14,6 +14,8 @@ import lombok.Setter;
 public class BookingResponseDTO {
     private Long id;
     private String customerName;
+    private String customerEmail;
+    private String customerPhone;
     private String eventName;
     private String bookingDate;
     private String ticketType;
@@ -22,6 +24,8 @@ public class BookingResponseDTO {
     public BookingResponseDTO(Booking booking) {
         this.id = booking.getId();
         this.customerName = booking.getCustomer().getName();
+        this.customerEmail = booking.getCustomer().getEmail();
+        this.customerPhone = booking.getCustomer().getPhone();
         this.eventName = booking.getTicket().getEvent().getName();
         this.bookingDate = booking.getBookingDate().toString();
         this.ticketType = booking.getTicket().getType();
