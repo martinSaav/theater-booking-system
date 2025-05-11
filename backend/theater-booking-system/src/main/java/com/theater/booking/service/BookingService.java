@@ -104,6 +104,7 @@ public class BookingService implements IBookingService {
     @Override
     public boolean delete(Long id) {
         Booking booking = findByIdAux(id);
+        booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
         bookingRepository.delete(booking);
         return true;
     }
