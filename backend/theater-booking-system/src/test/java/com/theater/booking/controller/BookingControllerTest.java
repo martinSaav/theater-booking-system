@@ -94,4 +94,23 @@ class BookingControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void testCreateBookingInvalidIEmail() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO("Raul", "nosoyunmail.com", "1168940114", 1L);
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testCreateBookingInvalidPhone() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO("Raul", "raul12@hotmail.com", "1168s", 1L);
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
 }
