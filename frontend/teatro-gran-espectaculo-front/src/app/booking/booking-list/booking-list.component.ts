@@ -15,7 +15,6 @@ export class BookingListComponent {
   email = '';
   customerName = '';
   phone = '';
-  bookingDate = '';
   ticketId: number = 1;
   bookings: Booking[] = [];
 
@@ -33,10 +32,9 @@ export class BookingListComponent {
 
   createBooking() {
     const booking: Booking = {
-      email: this.email,
+      customerEmail: this.email,
       customerName: this.customerName,
-      phone: this.phone,
-      bookingDate: this.bookingDate,
+      customerPhone: this.phone,
       ticketId: this.ticketId
     };
 
@@ -45,7 +43,6 @@ export class BookingListComponent {
       this.email = '';
       this.customerName = '';
       this.phone = '';
-      this.bookingDate = '';
       this.ticketId = 1;
     });
   }

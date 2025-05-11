@@ -13,14 +13,10 @@
         <input type="tel" class="form-control" [(ngModel)]="phone" name="phone" required>
       </div>
       <div class="mb-3">
-        <label class="form-label">Booking Date</label>
-        <input type="datetime-local" class="form-control" [(ngModel)]="bookingDate" name="bookingDate" required>
-      </div>
-      <div class="mb-3">
         <label class="form-label">Ticket ID</label>
         <input type="number" class="form-control" [(ngModel)]="ticketId" name="ticketId" required>
       </div>
-      <button class="btn btn-success" type="submit">Create Reservation</button>
+      <button class="btn btn-primary" type="submit">Create Booking</button>
     </form>
 
     <table class="table table-striped" *ngIf="bookings.length">
@@ -37,8 +33,8 @@
       <tbody>
         <tr *ngFor="let booking of bookings">
           <td>{{ booking.customerName }}</td>
-          <td>{{ booking.email }}</td>
-          <td>{{ booking.phone }}</td>
+          <td>{{ booking.customerEmail }}</td>
+          <td>{{ booking.customerPhone }}</td>
           <td>{{ booking.bookingDate }}</td>
           <td>{{ booking.ticketId }}</td>
           <td>
