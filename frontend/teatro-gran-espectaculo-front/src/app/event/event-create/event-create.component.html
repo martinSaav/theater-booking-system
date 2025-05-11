@@ -1,0 +1,24 @@
+<form class="mb-4" (ngSubmit)="createEvent()">
+    <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-control" [(ngModel)]="eventName" name="name" required>
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea class="form-control" [(ngModel)]="eventDescription" name="description" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Date</label>
+    <input type="datetime-local" class="form-control" [(ngModel)]="eventDate" name="dateTime" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Type</label>
+        <select [(ngModel)]="eventType" name="type" required class="form-select">
+        <option value="theater-plays">Theater Play</option>
+        <option value="concerts">Concert</option>
+        <option value="talks">Talk</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Create Event</button>
+    <button class="btn btn-secondary m-2" (click)="toEventList()">Back to Event List</button>
+</form>

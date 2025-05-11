@@ -1,33 +1,24 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { EventService } from '../../_services/event.service';
 import { Event } from '../../_models/event';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-event-list',
+  selector: 'app-event-create',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './event-list.component.html',
-  styleUrl: './event-list.component.scss'
+  imports: [FormsModule],
+  templateUrl: './event-create.component.html',
+  styleUrl: './event-create.component.scss'
 })
-export class EventListComponent implements OnInit {
-  private router = inject(Router);
+export class EventCreateComponent {
   eventName = '';
   eventDate = '';
   eventDescription = '';
   eventType = 'theater-plays';
-  events: Event[] = [];
+  private router = inject(Router);
 
   constructor(private eventService: EventService) { }
-
-  ngOnInit() {
-    this.eventService.getAllEvents().subscribe(events => {
-      this.events = events;
-    });
-  }
 
   createEvent() {
     const newEvent: Event = {
@@ -42,16 +33,14 @@ export class EventListComponent implements OnInit {
       'talks': () => this.eventService.createTalk(newEvent),
     };
 
-    this.getFromMap(creatorMap, this.eventType)().subscribe(saved => {
-      this.events.push(saved);
-      this.eventName = '';
-      this.eventDate = '';
-      this.eventDescription = '';
+    this.getFromMap(creatorMap, this.eventType)().subscribe(() => {
+      this.router.navigate(['/events']);
     });
+
   }
 
-  toCreateEvent() {
-    this.router.navigate(['/events/create']);
+  toEventList() {
+    this.router.navigate(['/events']);
   }
 
   private getFromMap<K extends string, V>(
@@ -60,4 +49,5 @@ export class EventListComponent implements OnInit {
   ): V {
     return map[key];
   }
+
 }
