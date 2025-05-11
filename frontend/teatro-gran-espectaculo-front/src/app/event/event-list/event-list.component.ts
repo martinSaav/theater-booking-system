@@ -54,6 +54,16 @@ export class EventListComponent implements OnInit {
     this.router.navigate(['/events/create']);
   }
 
+  toEventEdit(event: Event) {
+    this.router.navigate(['/events', event.id, 'edit']);
+  }
+
+  deleteEvent(event: Event) {
+    this.eventService.deleteEvent(event).subscribe(() => {
+      this.events = this.events.filter(e => e.id !== event.id);
+    });
+  }
+
   private getFromMap<K extends string, V>(
     map: Record<K, V>,
     key: K

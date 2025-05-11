@@ -38,4 +38,8 @@ private http = inject(HttpClient);
   createTalk(event: Event) {
     return this.http.post<Event>(`${this.baseUrl}/talks`, event);
   }
+
+  deleteEvent(event: Event) {
+    return this.http.delete(`${this.baseUrl}/${event.id}`);
+  }
 }
