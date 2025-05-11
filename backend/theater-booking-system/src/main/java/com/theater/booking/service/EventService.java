@@ -51,11 +51,14 @@ public class EventService implements IEventService {
     @Override
     public boolean delete(Long id) {
         Event event = findByIdAux(id);
+        if (!event.getTickets().isEmpty()) {
+            throw new IllegalStateException("Cannot delete event with associated tickets");
+        }
         eventRepository.delete(event);
         return true;
     }
 
     private Event findByIdAux(Long id) {
-        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("El evento con el id: " + id + " no existe"));
+        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Event not found"));
     }
 }

@@ -2,6 +2,7 @@ package com.theater.booking.controller;
 
 
 import com.theater.booking.dto.EventResponseDTO;
+import com.theater.booking.exceptions.EventDeletionNotAllowedException;
 import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.EventService;
@@ -92,6 +93,7 @@ public class EventController {
             responses = {
                     @ApiResponse(responseCode = "204"),
                     @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "409"),
                     @ApiResponse(responseCode = "500")
             }
     )
@@ -100,6 +102,8 @@ public class EventController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
         } catch (EntityNotFoundException e) {
             throw new EventNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch ( IllegalStateException e) {
+            throw new EventDeletionNotAllowedException(e.getMessage(), HttpStatus.CONFLICT);
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
