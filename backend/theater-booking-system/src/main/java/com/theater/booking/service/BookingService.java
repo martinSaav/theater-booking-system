@@ -105,6 +105,13 @@ public class BookingService implements IBookingService {
     public boolean delete(Long id) {
         Booking booking = findByIdAux(id);
         booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
+        Event event = booking.getTicket().getEvent();
+        if (event.getDateTime().isBefore(LocalDateTime.now().plusDays(5))) {
+            throw new IllegalStateException("Cannot cancel booking less than 5 days before the event");
+        }
+        if (event.getDateTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Cannot cancel booking for past events");
+        }
         bookingRepository.delete(booking);
         return true;
     }
