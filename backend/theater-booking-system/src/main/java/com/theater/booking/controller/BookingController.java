@@ -128,7 +128,7 @@ public class BookingController {
                     @ApiResponse(responseCode = "500")
             }
     )
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
         } catch (BusinessException e) {

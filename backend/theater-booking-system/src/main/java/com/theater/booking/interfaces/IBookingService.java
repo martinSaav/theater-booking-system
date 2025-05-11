@@ -15,5 +15,5 @@ public interface IBookingService {
 
     BookingResponseDTO update(Long id, BookingRequestDTO dto);
 
-    boolean delete(Long id);
+    Void delete(Long id);
 }

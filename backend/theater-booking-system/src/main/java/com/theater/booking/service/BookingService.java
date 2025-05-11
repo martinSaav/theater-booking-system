@@ -113,9 +113,8 @@ public class BookingService implements IBookingService {
 
     @Transactional
     @Override
-    public boolean delete(Long id) {
+    public Void delete(Long id) {
         Booking booking = findByIdAux(id);
-        booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
         Event event = booking.getTicket().getEvent();
         if (event.getDateTime().isBefore(LocalDateTime.now().plusDays(5))) {
             throw new BookingDeletionNotAllowedException("Cannot cancel booking for events within 5 days");
@@ -123,8 +122,9 @@ public class BookingService implements IBookingService {
         if (event.getDateTime().isBefore(LocalDateTime.now())) {
             throw new BookingDeletionNotAllowedException("Cannot cancel booking for past events");
         }
+        booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
         bookingRepository.delete(booking);
-        return true;
+        return null;
     }
 
     Booking findByIdAux(Long id) {

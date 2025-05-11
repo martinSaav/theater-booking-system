@@ -3,6 +3,8 @@ package com.theater.booking.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.exceptions.BookingDeletionNotAllowedException;
+import com.theater.booking.exceptions.BookingNotFoundException;
 import com.theater.booking.exceptions.DuplicateAttendanceException;
 import com.theater.booking.exceptions.NoTicketsAvailableException;
 import com.theater.booking.service.BookingService;
@@ -224,5 +226,35 @@ class BookingControllerTest {
                 .andExpect(status().isConflict());
 
         verify(bookingService, times(1)).save(any(BookingRequestDTO.class));
+    }
+
+    @Test
+    void testDeleteBooking() throws Exception {
+        doNothing().when(bookingService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/bookings/1"))
+                .andExpect(status().isNoContent());
+
+        verify(bookingService, times(1)).delete(1L);
+    }
+
+    @Test
+    void testDeleteBookingNotFound() throws Exception {
+        doThrow(new BookingNotFoundException("The booking with id: 1 does not exist")).when(bookingService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/bookings/1"))
+                .andExpect(status().isNotFound());
+
+        verify(bookingService, times(1)).delete(1L);
+    }
+
+    @Test
+    void testDeleteBookingNotAllowed() throws Exception {
+        doThrow(new BookingDeletionNotAllowedException("Cannot cancel booking for events within 5 days")).when(bookingService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/bookings/1"))
+                .andExpect(status().isConflict());
+
+        verify(bookingService, times(1)).delete(1L);
     }
 }
