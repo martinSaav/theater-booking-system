@@ -47,9 +47,81 @@ class BookingControllerTest {
     }
 
     @Test
+    void testGetAllBookingsUnexpectedError() throws Exception {
+        when(bookingService.findAll()).thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(get("/api/v1/bookings"))
+                .andExpect(status().isInternalServerError());
+
+        verify(bookingService, times(1)).findAll();
+    }
+
+    @Test
+    void testGetAllBookingsOneBooking() throws Exception {
+        BookingResponseDTO booking = new BookingResponseDTO();
+        booking.setId(1L);
+        booking.setCustomerName("Martín");
+        booking.setCustomerEmail("martin996@hotmail.com.ar");
+        booking.setCustomerPhone("1168940114");
+        booking.setTicketId(1L);
+        booking.setTicketType("General");
+        booking.setTicketPrice(2000.0);
+        booking.setEventName("Java Conf");
+        booking.setEventDate("2025-05-10T18:00");
+        booking.setBookingDate("2025-05-10T10:00:00");
+        List<BookingResponseDTO> bookings = List.of(booking);
+
+        when(bookingService.findAll()).thenReturn(bookings);
+        mockMvc.perform(get("/api/v1/bookings"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1));
+
+        verify(bookingService, times(1)).findAll();
+    }
+
+    @Test
+    void getAllBookings() throws Exception {
+        BookingResponseDTO booking1 = new BookingResponseDTO();
+        booking1.setId(1L);
+        booking1.setCustomerName("Martín");
+        booking1.setCustomerEmail("martin996@hotmail.com.ar");
+        booking1.setCustomerPhone("1168940114");
+        booking1.setTicketId(1L);
+        booking1.setTicketType("General");
+        booking1.setTicketPrice(2000.0);
+        booking1.setEventName("Java Conf");
+        booking1.setEventDate("2025-05-10T18:00");
+        booking1.setBookingDate("2025-05-10T10:00:00");
+
+        BookingResponseDTO booking2 = new BookingResponseDTO();
+        booking2.setId(2L);
+        booking2.setCustomerName("Raul");
+        booking2.setCustomerEmail("raul12@hotmail.com");
+        booking2.setCustomerPhone("1168940114");
+        booking2.setTicketId(2L);
+        booking2.setTicketType("Meet & Greet");
+        booking2.setTicketPrice(4000.0);
+        booking2.setEventName("Java Conf");
+        booking2.setEventDate("2025-05-10T18:00");
+        booking2.setBookingDate("2025-05-10T10:00:00");
+        List<BookingResponseDTO> bookings = List.of(booking1, booking2);
+
+        when(bookingService.findAll()).thenReturn(bookings);
+
+        mockMvc.perform(get("/api/v1/bookings"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(2));
+
+        verify(bookingService, times(1)).findAll();
+    }
+
+    @Test
     void testCreateBooking() throws Exception {
         BookingRequestDTO request = new BookingRequestDTO(
-                "Martín", "martin@example.com", "123456789", 1L
+                "Martín", "martin996@hotmail.com.ar", "1168940114", 1L
         );
 
         BookingResponseDTO response = new BookingResponseDTO();
