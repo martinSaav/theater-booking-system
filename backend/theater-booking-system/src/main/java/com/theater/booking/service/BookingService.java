@@ -2,6 +2,8 @@ package com.theater.booking.service;
 
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.exceptions.DuplicateAttendanceException;
+import com.theater.booking.exceptions.NoTicketsAvailableException;
 import com.theater.booking.interfaces.IBookingService;
 import com.theater.booking.model.*;
 import com.theater.booking.repository.AttendanceRepository;
@@ -52,7 +54,7 @@ public class BookingService implements IBookingService {
         }
         Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
         if (ticket.getAvailableStock() <= 0) {
-            throw new IllegalStateException("No tickets available");
+            throw new NoTicketsAvailableException("No tickets available");
         }
         ticket.setAvailableStock(ticket.getAvailableStock() - 1);
         ticketRepository.save(ticket);
@@ -72,7 +74,7 @@ public class BookingService implements IBookingService {
                 .findFirst()
                 .ifPresentOrElse(
                         attendance -> {
-                            throw new IllegalStateException("Customer already has an attendance for this event");
+                            throw new DuplicateAttendanceException("Customer already has an ticket for this event");
                         },
                         () -> {
                             Attendance attendance = new Attendance();

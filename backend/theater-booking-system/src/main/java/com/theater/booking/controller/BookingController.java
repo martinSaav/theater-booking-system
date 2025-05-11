@@ -75,14 +75,15 @@ public class BookingController {
             responses = {
                     @ApiResponse(responseCode = "201"),
                     @ApiResponse(responseCode = "400"),
+                    @ApiResponse(responseCode = "409"),
                     @ApiResponse(responseCode = "500")
             }
     )
     public ResponseEntity<BookingResponseDTO> save(@RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
-        } catch (DataIntegrityViolationException e) {
-            throw new NotValidBodyException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -109,7 +110,7 @@ public class BookingController {
         } catch (DataIntegrityViolationException | IllegalArgumentException e) {
             throw new NotValidBodyException(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (IllegalStateException e) {
-            throw new NotMoreAvailableTickets(e.getMessage(), HttpStatus.CONFLICT);
+            throw e;
         } catch (EntityNotFoundException e) {
             throw new BookingNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
