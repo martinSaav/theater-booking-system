@@ -12,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -69,7 +70,7 @@ public class BookingService implements IBookingService {
         attendanceRepository.save(attendance);
 
         Booking booking = new Booking();
-        booking.setBookingDate(dto.getBookingDate());
+        booking.setBookingDate(LocalDateTime.now());
         booking.setCustomer(customer);
         booking.setTicket(ticket);
         Booking bookingSaved = bookingRepository.save(booking);
@@ -80,7 +81,20 @@ public class BookingService implements IBookingService {
     @Transactional
     @Override
     public BookingResponseDTO update(Long id, BookingRequestDTO dto) {
-        return null;
+        Booking booking = findByIdAux(id);
+        booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
+        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        if (ticket.getAvailableStock() <= 0) {
+            throw new IllegalStateException("No tickets available");
+        }
+        ticket.setAvailableStock(ticket.getAvailableStock() - 1);
+        ticketRepository.save(ticket);
+
+        booking.setTicket(ticket);
+        booking.setBookingDate(LocalDateTime.now());
+        Booking bookingUpdated = bookingRepository.save(booking);
+
+        return new BookingResponseDTO(bookingUpdated);
     }
 
     @Transactional
