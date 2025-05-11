@@ -26,4 +26,7 @@ public class Booking extends Base {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Ticket ticket;
+
+    @Column(name = "discount", nullable = false)
+    private Double discount = 0.0;
 }

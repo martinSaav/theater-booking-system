@@ -48,9 +48,6 @@ public class BookingService implements IBookingService {
     @Transactional
     @Override
     public BookingResponseDTO save(BookingRequestDTO dto) {
-        if (dto.getCustomerEmail() == null || dto.getCustomerName() == null || dto.getCustomerPhone() == null) {
-            throw new IllegalArgumentException("Customer details are required");
-        }
         Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new TicketNotFoundException("The ticket with id: " + dto.getTicketId() + " does not exist"));
         if (ticket.getAvailableStock() <= 0) {
             throw new NoTicketsAvailableException("No tickets available");
@@ -67,7 +64,6 @@ public class BookingService implements IBookingService {
                     newCustomer.setPhone(dto.getCustomerPhone());
                     return customerRepository.save(newCustomer);
                 });
-
         customer.getAttendances().stream()
                 .filter(attendance -> attendance.getEvent().getId().equals(event.getId()))
                 .findFirst()
@@ -83,10 +79,19 @@ public class BookingService implements IBookingService {
                         }
                 );
 
+
+        Double discount = 0.0;
+        if (customer.shouldGetFreeBooking()) {
+            discount = ticket.getPrice();
+            customer.consumeReward();
+        }
+
         Booking booking = new Booking();
         booking.setBookingDate(LocalDateTime.now());
         booking.setCustomer(customer);
         booking.setTicket(ticket);
+        booking.setDiscount(discount);
+        customer.evaluateRewardEligibility();
         Booking bookingSaved = bookingRepository.save(booking);
 
         return new BookingResponseDTO(bookingSaved);
