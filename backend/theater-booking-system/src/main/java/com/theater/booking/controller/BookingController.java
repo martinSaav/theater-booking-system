@@ -134,6 +134,8 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
         } catch (EntityNotFoundException e) {
             throw new EventNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalStateException e) {
+            throw new BookingDeletionNotAllowedException(e.getMessage(), HttpStatus.CONFLICT);
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
