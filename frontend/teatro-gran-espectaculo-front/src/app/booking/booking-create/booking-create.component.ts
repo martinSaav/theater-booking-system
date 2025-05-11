@@ -25,7 +25,7 @@ export class BookingCreateComponent {
       customerEmail: this.email,
       customerName: this.customerName,
       customerPhone: this.phone,
-      ticketId: this.ticketId
+      ticketId: this.ticketId,
     };
     console.log(booking);
     this.bookingService.create(booking).subscribe(() => {
