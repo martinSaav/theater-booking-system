@@ -67,10 +67,20 @@ public class BookingService implements IBookingService {
                     return customerRepository.save(newCustomer);
                 });
 
-        Attendance attendance = new Attendance();
-        attendance.setCustomer(customer);
-        attendance.setEvent(event);
-        attendanceRepository.save(attendance);
+        customer.getAttendances().stream()
+                .filter(attendance -> attendance.getEvent().getId().equals(event.getId()))
+                .findFirst()
+                .ifPresentOrElse(
+                        attendance -> {
+                            throw new IllegalStateException("Customer already has an attendance for this event");
+                        },
+                        () -> {
+                            Attendance attendance = new Attendance();
+                            attendance.setCustomer(customer);
+                            attendance.setEvent(event);
+                            attendanceRepository.save(attendance);
+                        }
+                );
 
         Booking booking = new Booking();
         booking.setBookingDate(LocalDateTime.now());
