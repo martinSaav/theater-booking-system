@@ -126,6 +126,7 @@ public class BookingController {
             responses = {
                     @ApiResponse(responseCode = "204"),
                     @ApiResponse(responseCode = "404"),
+                    @ApiResponse(responseCode = "409"),
                     @ApiResponse(responseCode = "500")
             }
     )
