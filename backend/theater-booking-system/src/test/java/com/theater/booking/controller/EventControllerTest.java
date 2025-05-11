@@ -2,7 +2,6 @@ package com.theater.booking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theater.booking.dto.*;
-import com.theater.booking.exceptions.EventDeletionNotAllowedException;
 import com.theater.booking.model.*;
 import com.theater.booking.repository.ConcertRepository;
 import com.theater.booking.repository.TalkRepository;
@@ -15,10 +14,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -41,25 +39,25 @@ class EventControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private EventService eventService;
 
-    @MockBean
+    @MockitoBean
     private TheaterPlayService theaterPlayService;
 
-    @MockBean
+    @MockitoBean
     private TalkService talkService;
 
-    @MockBean
+    @MockitoBean
     private ConcertService concertService;
 
-    @MockBean
+    @MockitoBean
     private TheaterPlayRepository theaterPlayRepository;
 
-    @MockBean
+    @MockitoBean
     private TalkRepository talkRepository;
 
-    @MockBean
+    @MockitoBean
     private ConcertRepository concertRepository;
 
 
