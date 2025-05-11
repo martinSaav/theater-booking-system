@@ -18,6 +18,7 @@ public class BookingResponseDTO {
     private String customerPhone;
     private String eventName;
     private String bookingDate;
+    private Long ticketId;
     private String ticketType;
     private Double ticketPrice;
 
@@ -28,6 +29,7 @@ public class BookingResponseDTO {
         this.customerPhone = booking.getCustomer().getPhone();
         this.eventName = booking.getTicket().getEvent().getName();
         this.bookingDate = booking.getBookingDate().toString();
+        this.ticketId = booking.getTicket().getId();
         this.ticketType = booking.getTicket().getType();
         this.ticketPrice = booking.getTicket().getPrice();
     }
