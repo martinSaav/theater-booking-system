@@ -64,7 +64,7 @@ Access the API
 - Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 - REST API Base URL: `http://localhost:8080/api/v1/events`
 
-> 💡 Make sure port `8080` and `5433` are not being used by other services.
+> 💡 Make sure port `8080` and `5432` are not being used by other services.
 
 
 ### API Documentation 📘
