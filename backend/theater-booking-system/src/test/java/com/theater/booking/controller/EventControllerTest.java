@@ -492,9 +492,9 @@ class EventControllerTest {
         doThrow(new IllegalStateException("Cannot delete event with associated tickets")).when(eventService).delete(1L);
 
         mockMvc.perform(delete("/api/v1/events/1"))
-                .andExpect(status().isConflict())
-        ;
+                .andExpect(status().isConflict());
 
+        verify(eventService).delete(1L);
     }
 
 
