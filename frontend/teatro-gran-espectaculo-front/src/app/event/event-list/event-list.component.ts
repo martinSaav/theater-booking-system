@@ -29,27 +29,6 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  createEvent() {
-    const newEvent: Event = {
-      name: this.eventName,
-      dateTime: this.eventDate,
-      description: this.eventDescription
-    };
-
-    const creatorMap = {
-      'theater-plays': () => this.eventService.createTheaterPlay(newEvent),
-      'concerts': () => this.eventService.createConcert(newEvent),
-      'talks': () => this.eventService.createTalk(newEvent),
-    };
-
-    this.getFromMap(creatorMap, this.eventType)().subscribe(saved => {
-      this.events.push(saved);
-      this.eventName = '';
-      this.eventDate = '';
-      this.eventDescription = '';
-    });
-  }
-
   toCreateEvent() {
     this.router.navigate(['/events/create']);
   }
@@ -62,12 +41,5 @@ export class EventListComponent implements OnInit {
     this.eventService.deleteEvent(event).subscribe(() => {
       this.events = this.events.filter(e => e.id !== event.id);
     });
-  }
-
-  private getFromMap<K extends string, V>(
-    map: Record<K, V>,
-    key: K
-  ): V {
-    return map[key];
   }
 }

@@ -1,24 +1,5 @@
  <h2 class="mb-4">Manage Booking</h2>
-    <form class="mb-4" (ngSubmit)="createBooking()">
-      <div class="mb-3">
-        <label class="form-label">Customer Name</label>
-        <input type="text" class="form-control" [(ngModel)]="customerName" name="customerName" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control" [(ngModel)]="email" name="email" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Phone</label>
-        <input type="tel" class="form-control" [(ngModel)]="phone" name="phone" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Ticket ID</label>
-        <input type="number" class="form-control" [(ngModel)]="ticketId" name="ticketId" required>
-      </div>
-      <button class="btn btn-primary" type="submit">Create Booking</button>
-    </form>
-
+    <button class="btn btn-primary mb-3" (click)="toCreateBooking()">Create Booking</button>
     <table class="table table-striped" *ngIf="bookings.length">
       <thead>
         <tr>

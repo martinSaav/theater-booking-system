@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookingService } from '../../_services/booking.service';
 import { Booking } from '../../_models/booking';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-list',
@@ -12,11 +13,8 @@ import { Booking } from '../../_models/booking';
   styleUrl: './booking-list.component.scss'
 })
 export class BookingListComponent {
-  email = '';
-  customerName = '';
-  phone = '';
-  ticketId: number = 1;
   bookings: Booking[] = [];
+  router: Router = inject(Router);
 
   constructor(private bookingService: BookingService) {}
 
@@ -30,20 +28,7 @@ export class BookingListComponent {
     });
   }
 
-  createBooking() {
-    const booking: Booking = {
-      customerEmail: this.email,
-      customerName: this.customerName,
-      customerPhone: this.phone,
-      ticketId: this.ticketId
-    };
-
-    this.bookingService.create(booking).subscribe(newRes => {
-      this.bookings.push(newRes);
-      this.email = '';
-      this.customerName = '';
-      this.phone = '';
-      this.ticketId = 1;
-    });
+  toCreateBooking() {
+    this.router.navigate(['/bookings/create']);
   }
 }
