@@ -59,6 +59,6 @@ public class EventService implements IEventService {
     }
 
     private Event findByIdAux(Long id) {
-        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Event not found"));
+        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The event with id: " + id + " does not exist"));
     }
 }

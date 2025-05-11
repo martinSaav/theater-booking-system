@@ -55,6 +55,6 @@ public class ConcertService implements IConcertService {
 
 
     private Concert findByIdAux(Long id) {
-        return concertRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+        return concertRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The concert with id: " + id + " does not exist"));
     }
 }

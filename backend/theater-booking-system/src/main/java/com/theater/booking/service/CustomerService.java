@@ -52,6 +52,6 @@ public class CustomerService implements ICustomerService {
     }
 
     private Customer findByIdAux(String id) {
-        return customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+        return customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The customer with id: " + id + " does not exist"));
     }
 }

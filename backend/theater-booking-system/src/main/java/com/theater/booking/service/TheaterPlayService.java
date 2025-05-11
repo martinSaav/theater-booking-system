@@ -56,6 +56,6 @@ public class TheaterPlayService implements ITheaterPlayService {
 
 
     private TheaterPlay findByIdAux(Long id) {
-        return theaterPlayRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+        return theaterPlayRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The theater play with id: " + id + " does not exist"));
     }
 }

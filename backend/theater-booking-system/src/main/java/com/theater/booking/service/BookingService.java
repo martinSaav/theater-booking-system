@@ -86,7 +86,7 @@ public class BookingService implements IBookingService {
     public BookingResponseDTO update(Long id, BookingRequestDTO dto) {
         Booking booking = findByIdAux(id);
         booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
-        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("The ticket with id: " + dto.getTicketId() + " does not exist"));
         if (ticket.getAvailableStock() <= 0) {
             throw new IllegalStateException("No tickets available");
         }
@@ -118,6 +118,6 @@ public class BookingService implements IBookingService {
 
     Booking findByIdAux(Long id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
+                .orElseThrow(() -> new EntityNotFoundException("The booking with id: " + id + " does not exist"));
     }
 }

@@ -72,11 +72,11 @@ public class TicketService implements ITicketService {
     }
 
     private Ticket findByIdAux(Long id) {
-        return ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+        return ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The ticket with id: " + id + " does not exist"));
     }
 
     private Event findEventById(Long id) {
-        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+        return eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The event with id: " + id + " does not exist"));
     }
 
 }

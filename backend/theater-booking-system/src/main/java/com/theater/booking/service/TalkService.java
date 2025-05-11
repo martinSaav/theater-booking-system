@@ -55,6 +55,6 @@ public class TalkService implements ITalkService {
     }
 
     private Talk findByIdAux(Long id) {
-        return talkRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
+        return talkRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The talk with id: " + id + " does not exist"));
     }
 }
