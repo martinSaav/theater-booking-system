@@ -2,6 +2,7 @@ package com.theater.booking.service;
 
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.exceptions.BookingNotFoundException;
 import com.theater.booking.exceptions.DuplicateAttendanceException;
 import com.theater.booking.exceptions.NoTicketsAvailableException;
 import com.theater.booking.interfaces.IBookingService;
@@ -100,7 +101,7 @@ public class BookingService implements IBookingService {
         booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
         Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("The ticket with id: " + dto.getTicketId() + " does not exist"));
         if (ticket.getAvailableStock() <= 0) {
-            throw new IllegalStateException("No tickets available");
+            throw new NoTicketsAvailableException("No tickets available");
         }
         ticket.setAvailableStock(ticket.getAvailableStock() - 1);
         ticketRepository.save(ticket);
@@ -130,6 +131,6 @@ public class BookingService implements IBookingService {
 
     Booking findByIdAux(Long id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The booking with id: " + id + " does not exist"));
+                .orElseThrow(() -> new BookingNotFoundException("The booking with id: " + id + " does not exist"));
     }
 }

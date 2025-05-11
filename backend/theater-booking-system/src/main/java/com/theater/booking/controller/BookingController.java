@@ -59,8 +59,8 @@ public class BookingController {
     public ResponseEntity<BookingResponseDTO> getRecordById(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
-        } catch (EntityNotFoundException e) {
-            throw new BookingNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -107,12 +107,8 @@ public class BookingController {
     public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
-        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
-            throw new NotValidBodyException(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (IllegalStateException e) {
+        } catch (BusinessException e) {
             throw e;
-        } catch (EntityNotFoundException e) {
-            throw new BookingNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -136,8 +132,8 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
         } catch (EntityNotFoundException e) {
             throw new EventNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (IllegalStateException e) {
-            throw new BookingDeletionNotAllowedException(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
