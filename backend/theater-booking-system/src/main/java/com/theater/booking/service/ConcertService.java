@@ -53,13 +53,6 @@ public class ConcertService implements IConcertService {
         return new ConcertResponseDTO(concertRepository.save(concert));
     }
 
-    @Transactional
-    @Override
-    public boolean delete(Long id) {
-        Concert concert = findByIdAux(id);
-        concertRepository.delete(concert);
-        return true;
-    }
 
     private Concert findByIdAux(Long id) {
         return concertRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));

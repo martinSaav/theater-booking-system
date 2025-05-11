@@ -13,6 +13,4 @@ public interface ITheaterPlayService {
     TheaterPlayResponseDTO save(TheaterPlayRequestDTO dto);
 
     TheaterPlayResponseDTO update(Long id, TheaterPlayRequestDTO dto);
-
-    boolean delete(Long id);
 }

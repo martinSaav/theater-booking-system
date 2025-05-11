@@ -14,6 +14,4 @@ public interface ITalkService {
     TalkResponseDTO save(TalkRequestDTO dto);
 
     TalkResponseDTO update(Long id, TalkRequestDTO dto);
-
-    boolean delete(Long id);
 }

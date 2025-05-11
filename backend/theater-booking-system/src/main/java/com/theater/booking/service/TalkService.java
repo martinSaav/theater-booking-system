@@ -54,13 +54,6 @@ public class TalkService implements ITalkService {
         return new TalkResponseDTO(talkRepository.save(talk));
     }
 
-    @Override
-    public boolean delete(Long id) {
-        Talk talk = findByIdAux(id);
-        talkRepository.delete(talk);
-        return true;
-    }
-
     private Talk findByIdAux(Long id) {
         return talkRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));
     }

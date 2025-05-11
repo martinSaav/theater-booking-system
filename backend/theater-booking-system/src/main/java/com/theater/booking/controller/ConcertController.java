@@ -115,26 +115,4 @@ public class ConcertController {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @DeleteMapping("/{id}")
-    @Operation(
-            description = "Elimina un concierto por id",
-            parameters = {
-                    @Parameter(name = "id", description = "Id del concierto", required = true)
-            },
-            responses = {
-                    @ApiResponse(responseCode = "204"),
-                    @ApiResponse(responseCode = "404"),
-                    @ApiResponse(responseCode = "500")
-            }
-    )
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
-        try {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
-        } catch (EntityNotFoundException e) {
-            throw new EventNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }

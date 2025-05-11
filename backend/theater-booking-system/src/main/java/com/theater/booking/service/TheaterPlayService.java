@@ -54,13 +54,6 @@ public class TheaterPlayService implements ITheaterPlayService {
         return new TheaterPlayResponseDTO(theaterPlayRepository.save(theaterPlay));
     }
 
-    @Transactional
-    @Override
-    public boolean delete(Long id) {
-        TheaterPlay theaterPlay = findByIdAux(id);
-        theaterPlayRepository.delete(theaterPlay);
-        return true;
-    }
 
     private TheaterPlay findByIdAux(Long id) {
         return theaterPlayRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("La entidad con el id: " + id + " no existe"));

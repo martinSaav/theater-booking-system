@@ -14,6 +14,4 @@ public interface IConcertService {
     ConcertResponseDTO save(ConcertRequestDTO dto);
 
     ConcertResponseDTO update(Long id, ConcertRequestDTO dto);
-
-    boolean delete(Long id);
 }
