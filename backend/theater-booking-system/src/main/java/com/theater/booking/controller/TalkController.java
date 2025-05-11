@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +80,7 @@ public class TalkController {
                     @ApiResponse(responseCode = "500")
             }
     )
-    public ResponseEntity<TalkResponseDTO> save(@RequestBody TalkRequestDTO dto) {
+    public ResponseEntity<TalkResponseDTO> save(@Valid @RequestBody TalkRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
         } catch (DataIntegrityViolationException e) {

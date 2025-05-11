@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +81,7 @@ public class ConcertController {
                     @ApiResponse(responseCode = "500")
             }
     )
-    public ResponseEntity<ConcertResponseDTO> save(@RequestBody ConcertRequestDTO dto) {
+    public ResponseEntity<ConcertResponseDTO> save(@Valid @RequestBody ConcertRequestDTO dto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
         } catch (DataIntegrityViolationException e) {

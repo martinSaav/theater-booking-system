@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -47,82 +48,6 @@ class EventControllerTest {
     @MockBean
     private ConcertService concertService;
 
-    @Test
-    void testCreateTheaterPlay() throws Exception {
-        TheaterPlayRequestDTO request = new TheaterPlayRequestDTO(
-                "Tech Talk",
-                LocalDateTime.of(2025, 1, 1, 0, 0),
-                "A talk about tech."
-        );
-        TheaterPlay theaterPlay = new TheaterPlay();
-        theaterPlay.setId(1L);
-        theaterPlay.setName(request.getName());
-        theaterPlay.setDateTime(request.getDateTime());
-        theaterPlay.setDescription(request.getDescription());
-        TheaterPlayResponseDTO response = new TheaterPlayResponseDTO(theaterPlay);
-
-        when(theaterPlayService.save(any(TheaterPlayRequestDTO.class))).thenReturn(response);
-
-        mockMvc.perform(post("/api/v1/events/theater-plays")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("Tech Talk"))
-                .andExpect(jsonPath("$.dateTime").value("2025-01-01T00:00"))
-                .andExpect(jsonPath("$.description").value("A talk about tech."))
-        ;
-
-        verify(theaterPlayService, times(1)).save(any(TheaterPlayRequestDTO.class));
-    }
-
-    @Test
-    void testCreateTalk() throws Exception {
-        TalkRequestDTO request = new TalkRequestDTO("Java Conf", LocalDateTime.of(2025, 5, 10, 18, 0), "A conference");
-        Talk talk = new Talk();
-        talk.setId(1L);
-        talk.setName(request.getName());
-        talk.setDateTime(request.getDateTime());
-        talk.setDescription(request.getDescription());
-        TalkResponseDTO response = new TalkResponseDTO(talk);
-
-        when(talkService.save(any(TalkRequestDTO.class))).thenReturn(response);
-
-        mockMvc.perform(post("/api/v1/events/talks")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("Java Conf"))
-                .andExpect(jsonPath("$.dateTime").value("2025-05-10T18:00"))
-                .andExpect(jsonPath("$.description").value("A conference"));
-
-        verify(talkService, times(1)).save(any(TalkRequestDTO.class));
-    }
-
-    @Test
-    void testCreateConcert() throws Exception {
-        ConcertRequestDTO request = new ConcertRequestDTO("Live Rock", LocalDateTime.of(2025, 6, 15, 21, 0), "Rock concert");
-        Concert concert = new Concert();
-        concert.setId(1L);
-        concert.setName(request.getName());
-        concert.setDateTime(request.getDateTime());
-        concert.setDescription(request.getDescription());
-        ConcertResponseDTO response = new ConcertResponseDTO(concert);
-
-        when(concertService.save(any(ConcertRequestDTO.class))).thenReturn(response);
-
-        mockMvc.perform(post("/api/v1/events/concerts")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("Live Rock"))
-                .andExpect(jsonPath("$.dateTime").value("2025-06-15T21:00"))
-                .andExpect(jsonPath("$.description").value("Rock concert"));
-
-        verify(concertService, times(1)).save(any(ConcertRequestDTO.class));
-    }
 
     @Test
     void TestGetAllEventsEmpty() throws Exception {
@@ -327,4 +252,114 @@ class EventControllerTest {
 
         verify(talkService, times(1)).findAll();
     }
+
+    @Test
+    void testCreateTheaterPlay() throws Exception {
+        TheaterPlayRequestDTO request = new TheaterPlayRequestDTO(
+                "Tech Talk",
+                LocalDateTime.of(2025, 1, 1, 0, 0),
+                "A talk about tech."
+        );
+        TheaterPlay theaterPlay = new TheaterPlay();
+        theaterPlay.setId(1L);
+        theaterPlay.setName(request.getName());
+        theaterPlay.setDateTime(request.getDateTime());
+        theaterPlay.setDescription(request.getDescription());
+        TheaterPlayResponseDTO response = new TheaterPlayResponseDTO(theaterPlay);
+
+        when(theaterPlayService.save(any(TheaterPlayRequestDTO.class))).thenReturn(response);
+
+        mockMvc.perform(post("/api/v1/events/theater-plays")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.name").value("Tech Talk"))
+                .andExpect(jsonPath("$.dateTime").value("2025-01-01T00:00"))
+                .andExpect(jsonPath("$.description").value("A talk about tech."))
+        ;
+
+        verify(theaterPlayService, times(1)).save(any(TheaterPlayRequestDTO.class));
+    }
+
+    @Test
+    void testCreateTheaterPlayInvalidInput() throws Exception {
+        TheaterPlayRequestDTO invalidRequest = new TheaterPlayRequestDTO("", null, "");
+
+        mockMvc.perform(post("/api/v1/events/theater-plays")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testCreateTalk() throws Exception {
+        TalkRequestDTO request = new TalkRequestDTO("Java Conf", LocalDateTime.of(2025, 5, 10, 18, 0), "A conference");
+        Talk talk = new Talk();
+        talk.setId(1L);
+        talk.setName(request.getName());
+        talk.setDateTime(request.getDateTime());
+        talk.setDescription(request.getDescription());
+        TalkResponseDTO response = new TalkResponseDTO(talk);
+
+        when(talkService.save(any(TalkRequestDTO.class))).thenReturn(response);
+
+        mockMvc.perform(post("/api/v1/events/talks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.name").value("Java Conf"))
+                .andExpect(jsonPath("$.dateTime").value("2025-05-10T18:00"))
+                .andExpect(jsonPath("$.description").value("A conference"));
+
+        verify(talkService, times(1)).save(any(TalkRequestDTO.class));
+    }
+
+    @Test
+    void testCreateTalkInvalidInput() throws Exception {
+        TalkRequestDTO invalidRequest = new TalkRequestDTO("", null, "");
+        mockMvc.perform(post("/api/v1/events/talks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    void testCreateConcert() throws Exception {
+        ConcertRequestDTO request = new ConcertRequestDTO("Live Rock", LocalDateTime.of(2025, 6, 15, 21, 0), "Rock concert");
+        Concert concert = new Concert();
+        concert.setId(1L);
+        concert.setName(request.getName());
+        concert.setDateTime(request.getDateTime());
+        concert.setDescription(request.getDescription());
+        ConcertResponseDTO response = new ConcertResponseDTO(concert);
+
+        when(concertService.save(any(ConcertRequestDTO.class))).thenReturn(response);
+
+        mockMvc.perform(post("/api/v1/events/concerts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.name").value("Live Rock"))
+                .andExpect(jsonPath("$.dateTime").value("2025-06-15T21:00"))
+                .andExpect(jsonPath("$.description").value("Rock concert"));
+
+        verify(concertService, times(1)).save(any(ConcertRequestDTO.class));
+    }
+
+    @Test
+    void testCreateConcertInvalidInput() throws Exception {
+        ConcertRequestDTO request = new ConcertRequestDTO("", null, "");
+
+        mockMvc.perform(post("/api/v1/events/concerts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+
+
 }
