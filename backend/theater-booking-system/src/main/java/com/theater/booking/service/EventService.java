@@ -49,13 +49,13 @@ public class EventService implements IEventService {
 
     @Transactional
     @Override
-    public boolean delete(Long id) {
+    public Void delete(Long id) {
         Event event = findByIdAux(id);
         if (!event.getTickets().isEmpty()) {
             throw new IllegalStateException("Cannot delete event with associated tickets");
         }
         eventRepository.delete(event);
-        return true;
+        return null;
     }
 
     private Event findByIdAux(Long id) {

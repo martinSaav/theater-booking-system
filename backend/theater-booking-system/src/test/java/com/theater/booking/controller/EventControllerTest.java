@@ -2,16 +2,21 @@ package com.theater.booking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theater.booking.dto.*;
+import com.theater.booking.exceptions.EventDeletionNotAllowedException;
 import com.theater.booking.model.*;
+import com.theater.booking.repository.ConcertRepository;
+import com.theater.booking.repository.TalkRepository;
+import com.theater.booking.repository.TheaterPlayRepository;
 import com.theater.booking.service.ConcertService;
 import com.theater.booking.service.EventService;
 import com.theater.booking.service.TalkService;
 import com.theater.booking.service.TheaterPlayService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -47,6 +52,15 @@ class EventControllerTest {
 
     @MockBean
     private ConcertService concertService;
+
+    @MockBean
+    private TheaterPlayRepository theaterPlayRepository;
+
+    @MockBean
+    private TalkRepository talkRepository;
+
+    @MockBean
+    private ConcertRepository concertRepository;
 
 
     @Test
@@ -421,7 +435,6 @@ class EventControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-
     @Test
     void testCreateConcert() throws Exception {
         ConcertRequestDTO request = new ConcertRequestDTO("Live Rock", LocalDateTime.of(2025, 6, 15, 21, 0), "Rock concert");
@@ -456,6 +469,35 @@ class EventControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void testDeleteEvent() throws Exception {
+        doNothing().when(eventService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/events/1"))
+                .andExpect(status().isNoContent());
+
+        verify(eventService).delete(1L);
+    }
+
+    @Test
+    void testDeleteEventNotFound() throws Exception {
+        doThrow(new EntityNotFoundException("The event with id: 1 does not exist")).when(eventService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/events/1"))
+                .andExpect(status().isNotFound());
+
+        verify(eventService).delete(1L);
+    }
+
+    @Test
+    void testDeleteEventWithReservationsShouldFail() throws Exception {
+        doThrow(new IllegalStateException("Cannot delete event with associated tickets")).when(eventService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/events/1"))
+                .andExpect(status().isConflict())
+        ;
+
+    }
 
 
 }

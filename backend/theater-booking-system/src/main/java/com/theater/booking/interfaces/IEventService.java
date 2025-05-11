@@ -13,5 +13,5 @@ public interface IEventService {
 
     EventResponseDTO findById(Long id);
 
-    boolean delete(Long id);
+    Void delete(Long id);
 }

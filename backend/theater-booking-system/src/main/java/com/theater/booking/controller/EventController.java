@@ -97,12 +97,12 @@ public class EventController {
                     @ApiResponse(responseCode = "500")
             }
     )
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
         } catch (EntityNotFoundException e) {
             throw new EventNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch ( IllegalStateException e) {
+        } catch (IllegalStateException e) {
             throw new EventDeletionNotAllowedException(e.getMessage(), HttpStatus.CONFLICT);
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
