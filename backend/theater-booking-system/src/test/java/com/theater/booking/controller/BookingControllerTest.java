@@ -3,6 +3,8 @@ package com.theater.booking.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.exceptions.DuplicateAttendanceException;
+import com.theater.booking.exceptions.NoTicketsAvailableException;
 import com.theater.booking.service.BookingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,5 +186,43 @@ class BookingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testCreateBookingNoTicketsAvailable() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO("Raul", "raul12@mail.com", "1123456789", 1L);
+
+        when(bookingService.save(any(BookingRequestDTO.class)))
+                .thenThrow(new NoTicketsAvailableException("No tickets available"));
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    void testCreateBookingAllFieldsNull() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO(null, null, null, null);
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testCreateBookingDuplicateAttendanceForEvent() throws Exception {
+        BookingRequestDTO request = new BookingRequestDTO("Raul", "raul12@mail.com", "1123456789", 1L);
+
+        when(bookingService.save(any(BookingRequestDTO.class)))
+                .thenThrow(new DuplicateAttendanceException("Customer already has an ticket for this event"));
+
+        mockMvc.perform(post("/api/v1/bookings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict());
+
+        verify(bookingService, times(1)).save(any(BookingRequestDTO.class));
     }
 }
