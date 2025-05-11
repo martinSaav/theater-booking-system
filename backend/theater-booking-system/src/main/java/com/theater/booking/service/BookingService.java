@@ -2,9 +2,7 @@ package com.theater.booking.service;
 
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
-import com.theater.booking.exceptions.BookingNotFoundException;
-import com.theater.booking.exceptions.DuplicateAttendanceException;
-import com.theater.booking.exceptions.NoTicketsAvailableException;
+import com.theater.booking.exceptions.*;
 import com.theater.booking.interfaces.IBookingService;
 import com.theater.booking.model.*;
 import com.theater.booking.repository.AttendanceRepository;
@@ -53,7 +51,7 @@ public class BookingService implements IBookingService {
         if (dto.getCustomerEmail() == null || dto.getCustomerName() == null || dto.getCustomerPhone() == null) {
             throw new IllegalArgumentException("Customer details are required");
         }
-        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new TicketNotFoundException("The ticket with id: " + dto.getTicketId() + " does not exist"));
         if (ticket.getAvailableStock() <= 0) {
             throw new NoTicketsAvailableException("No tickets available");
         }
@@ -99,7 +97,7 @@ public class BookingService implements IBookingService {
     public BookingResponseDTO update(Long id, BookingRequestDTO dto) {
         Booking booking = findByIdAux(id);
         booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
-        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new EntityNotFoundException("The ticket with id: " + dto.getTicketId() + " does not exist"));
+        Ticket ticket = ticketRepository.findById(dto.getTicketId()).orElseThrow(() -> new TicketNotFoundException("The ticket with id: " + dto.getTicketId() + " does not exist"));
         if (ticket.getAvailableStock() <= 0) {
             throw new NoTicketsAvailableException("No tickets available");
         }
@@ -120,10 +118,10 @@ public class BookingService implements IBookingService {
         booking.getTicket().setAvailableStock(booking.getTicket().getAvailableStock() + 1);
         Event event = booking.getTicket().getEvent();
         if (event.getDateTime().isBefore(LocalDateTime.now().plusDays(5))) {
-            throw new IllegalStateException("Cannot cancel booking less than 5 days before the event");
+            throw new BookingDeletionNotAllowedException("Cannot cancel booking for events within 5 days");
         }
         if (event.getDateTime().isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Cannot cancel booking for past events");
+            throw new BookingDeletionNotAllowedException("Cannot cancel booking for past events");
         }
         bookingRepository.delete(booking);
         return true;

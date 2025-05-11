@@ -61,7 +61,7 @@ public class TicketController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
         } catch (EntityNotFoundException e) {
-            throw new TicketNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
+            throw new TicketNotFoundException(e.getMessage());
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -109,7 +109,7 @@ public class TicketController {
         } catch (DataIntegrityViolationException e) {
             throw new NotValidBodyException(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (EntityNotFoundException e) {
-            throw new TicketNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
+            throw new TicketNotFoundException(e.getMessage());
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -131,7 +131,7 @@ public class TicketController {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
         } catch (EntityNotFoundException e) {
-            throw new TicketNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
+            throw new TicketNotFoundException(e.getMessage());
         } catch (Exception e) {
             throw new UnknownErrorException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

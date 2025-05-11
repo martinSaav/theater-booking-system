@@ -130,8 +130,6 @@ public class BookingController {
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.delete(id));
-        } catch (EntityNotFoundException e) {
-            throw new EventNotFoundException(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (BusinessException e) {
             throw e;
         } catch (Exception e) {
