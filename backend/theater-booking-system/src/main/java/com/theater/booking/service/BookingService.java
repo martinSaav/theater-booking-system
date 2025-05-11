@@ -55,12 +55,12 @@ public class BookingService implements IBookingService {
         ticketRepository.save(ticket);
 
         Event event = ticket.getEvent();
-        Customer customer = customerRepository.findById(dto.getEmail())
+        Customer customer = customerRepository.findById(dto.getCustomerEmail())
                 .orElseGet(() -> {
                     Customer newCustomer = new Customer();
-                    newCustomer.setEmail(dto.getEmail());
+                    newCustomer.setEmail(dto.getCustomerEmail());
                     newCustomer.setName(dto.getCustomerName());
-                    newCustomer.setPhone(dto.getPhone());
+                    newCustomer.setPhone(dto.getCustomerPhone());
                     return customerRepository.save(newCustomer);
                 });
 
