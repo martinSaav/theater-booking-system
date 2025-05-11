@@ -63,6 +63,14 @@ class EventControllerTest {
     }
 
     @Test
+    void testGetAllEventsUnexpectedError() throws Exception {
+        when(eventService.findAll()).thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(get("/api/v1/events"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
     void TestAllEventsOneEvent() throws Exception {
         List<Ticket> tickets = new ArrayList<>();
         List<EventResponseDTO> events = new ArrayList<>();
@@ -126,6 +134,78 @@ class EventControllerTest {
     }
 
     @Test
+    void TestGetAllTheaterPlaysEmpty() throws Exception {
+        List<TheaterPlayResponseDTO> theaterPlays = new ArrayList<>();
+        when(theaterPlayService.findAll()).thenReturn(theaterPlays);
+
+        mockMvc.perform(get("/api/v1/events/theater-plays"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(0));
+
+        verify(theaterPlayService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllTheaterPlaysUnexpectedError() throws Exception {
+        when(theaterPlayService.findAll()).thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(get("/api/v1/events/theater-plays"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    void TestGetAllTheaterPlaysOneTheaterPlay() throws Exception {
+        List<TheaterPlayResponseDTO> theaterPlays = new ArrayList<>();
+        TheaterPlay theaterPlay = new TheaterPlay();
+        theaterPlay.setId(1L);
+        theaterPlay.setName("Tech Talk");
+        theaterPlay.setDateTime(LocalDateTime.of(2025, 1, 1, 0, 0));
+        theaterPlay.setDescription("A talk about tech.");
+        TheaterPlayResponseDTO theaterPlayResponse = new TheaterPlayResponseDTO(theaterPlay);
+        theaterPlays.add(theaterPlayResponse);
+
+        when(theaterPlayService.findAll()).thenReturn(theaterPlays);
+
+        mockMvc.perform(get("/api/v1/events/theater-plays"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1));
+
+        verify(theaterPlayService, times(1)).findAll();
+    }
+
+    @Test
+    void testGetAllTheaterPlays() throws Exception {
+        List<TheaterPlayResponseDTO> theaterPlays = new ArrayList<>();
+        TheaterPlay theaterPlay1 = new TheaterPlay();
+        theaterPlay1.setId(1L);
+        theaterPlay1.setName("Tech Talk");
+        theaterPlay1.setDateTime(LocalDateTime.of(2025, 1, 1, 0, 0));
+        theaterPlay1.setDescription("A talk about tech.");
+        TheaterPlayResponseDTO theaterPlayResponse = new TheaterPlayResponseDTO(theaterPlay1);
+        theaterPlays.add(theaterPlayResponse);
+
+        TheaterPlay theaterPlay2 = new TheaterPlay();
+        theaterPlay2.setId(2L);
+        theaterPlay2.setName("Shakespeare Play");
+        theaterPlay2.setDateTime(LocalDateTime.of(2025, 3, 10, 20, 0));
+        theaterPlay2.setDescription("A Shakespeare play.");
+        TheaterPlayResponseDTO theaterPlayResponse2 = new TheaterPlayResponseDTO(theaterPlay2);
+        theaterPlays.add(theaterPlayResponse2);
+
+        when(theaterPlayService.findAll()).thenReturn(theaterPlays);
+
+        mockMvc.perform(get("/api/v1/events/theater-plays"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(2));
+
+        verify(theaterPlayService, times(1)).findAll();
+    }
+
+    @Test
     void TestGetAllConcertsEmpty() throws Exception {
         List<ConcertResponseDTO> concerts = new ArrayList<>();
         when(concertService.findAll()).thenReturn(concerts);
@@ -136,6 +216,14 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.length()").value(0));
 
         verify(concertService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllConcertsUnexpectedError() throws Exception {
+        when(concertService.findAll()).thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(get("/api/v1/events/concerts"))
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -200,6 +288,14 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.length()").value(0));
 
         verify(talkService, times(1)).findAll();
+    }
+
+    @Test
+    void TestGetAllTalksUnexpectedError() throws Exception {
+        when(talkService.findAll()).thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(get("/api/v1/events/talks"))
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
