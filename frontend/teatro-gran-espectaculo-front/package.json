@@ -1,7 +1,6 @@
 {
   "name": "teatro-gran-espectaculo-front",
   "version": "0.0.0",
-  "homepage": "https://martinsaav.github.io/theater-booking-system/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +10,7 @@
     "build:prod": "ng build --configuration=production",
     "start:prod": "ng serve --configuration=production",  
     "predeploy": "ng build --configuration=production ",
-    "deploy": "gh-pages -d dist/teatro-gran-espectaculo-front"
+    "deploy": "cp vercel.json dist/teatro-gran-espectaculo-front/ && cd dist/teatro-gran-espectaculo-front && vercel --prod"
   },
   "private": true,
   "dependencies": {
