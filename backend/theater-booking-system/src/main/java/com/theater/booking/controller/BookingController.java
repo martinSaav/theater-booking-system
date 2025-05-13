@@ -1,8 +1,8 @@
 package com.theater.booking.controller;
 
 
-import com.theater.booking.dto.BookingRequestDTO;
-import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.dto.request.BookingRequestDTO;
+import com.theater.booking.dto.response.BookingResponseDTO;
 import com.theater.booking.exceptions.BusinessException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.BookingService;

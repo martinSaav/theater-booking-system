@@ -1,7 +1,7 @@
 package com.theater.booking.service;
 
-import com.theater.booking.dto.CustomerRequestDTO;
-import com.theater.booking.dto.CustomerResponseDTO;
+import com.theater.booking.dto.request.CustomerRequestDTO;
+import com.theater.booking.dto.response.CustomerResponseDTO;
 import com.theater.booking.interfaces.ICustomerService;
 import com.theater.booking.model.Customer;
 import com.theater.booking.repository.CustomerRepository;

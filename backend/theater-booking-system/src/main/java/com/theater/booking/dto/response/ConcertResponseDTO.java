@@ -1,4 +1,4 @@
-package com.theater.booking.dto;
+package com.theater.booking.dto.response;
 
 
 import com.theater.booking.model.Concert;

@@ -1,7 +1,7 @@
 package com.theater.booking.controller;
 
 
-import com.theater.booking.dto.EventResponseDTO;
+import com.theater.booking.dto.response.EventResponseDTO;
 import com.theater.booking.exceptions.EventDeletionNotAllowedException;
 import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.UnknownErrorException;

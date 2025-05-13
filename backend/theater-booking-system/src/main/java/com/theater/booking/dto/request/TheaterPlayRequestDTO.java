@@ -1,4 +1,5 @@
-package com.theater.booking.dto;
+package com.theater.booking.dto.request;
+
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,12 +10,11 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TalkRequestDTO {
+public class TheaterPlayRequestDTO {
     @NotBlank(message = "name must not be blank")
     private String name;
     @NotNull(message = "dateTime must not be null")

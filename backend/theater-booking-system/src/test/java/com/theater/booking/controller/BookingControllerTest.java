@@ -1,8 +1,8 @@
 package com.theater.booking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.theater.booking.dto.BookingRequestDTO;
-import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.dto.request.BookingRequestDTO;
+import com.theater.booking.dto.response.BookingResponseDTO;
 import com.theater.booking.exceptions.BookingDeletionNotAllowedException;
 import com.theater.booking.exceptions.BookingNotFoundException;
 import com.theater.booking.exceptions.DuplicateAttendanceException;
