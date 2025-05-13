@@ -1,3 +1,4 @@
+[![Deploy to EC2](https://github.com/martinSaav/theater-booking-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/martinSaav/theater-booking-system/actions/workflows/deploy.yml)
 ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/teatro-gran-espectaculo-front)
 # Theater Booking System
 
