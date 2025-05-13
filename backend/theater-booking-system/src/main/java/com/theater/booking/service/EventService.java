@@ -24,7 +24,7 @@ public class EventService implements IEventService {
 
     @Override
     public List<EventResponseDTO> findAll() {
-        return eventRepository.findAll().stream()
+        return eventRepository.findAllByOrderByIdAsc().stream()
                 .map(EventResponseDTO::new)
                 .toList();
     }

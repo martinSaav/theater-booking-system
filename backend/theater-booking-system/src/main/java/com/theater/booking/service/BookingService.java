@@ -34,7 +34,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public List<BookingResponseDTO> findAll() {
-        return bookingRepository.findAll().stream()
+        return bookingRepository.findAllByOrderByIdAsc().stream()
                 .map(BookingResponseDTO::new)
                 .toList();
     }
