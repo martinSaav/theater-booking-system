@@ -22,6 +22,7 @@ public class ControllerAdvice {
                 .build();
         return new ResponseEntity<>(errorDto, e.getHttpStatus());
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDTO> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         ErrorDTO errorDto = ErrorDTO.builder()

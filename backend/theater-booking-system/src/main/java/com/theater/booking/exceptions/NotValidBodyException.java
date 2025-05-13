@@ -1,4 +1,5 @@
 package com.theater.booking.exceptions;
+
 import org.springframework.http.HttpStatus;
 
 public class NotValidBodyException extends BusinessException {

@@ -2,7 +2,10 @@ package com.theater.booking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theater.booking.dto.*;
-import com.theater.booking.model.*;
+import com.theater.booking.model.Concert;
+import com.theater.booking.model.Talk;
+import com.theater.booking.model.TheaterPlay;
+import com.theater.booking.model.Ticket;
 import com.theater.booking.repository.ConcertRepository;
 import com.theater.booking.repository.TalkRepository;
 import com.theater.booking.repository.TheaterPlayRepository;
@@ -26,7 +29,6 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 
 @WebMvcTest({EventController.class, TheaterPlayController.class, TalkController.class, ConcertController.class})

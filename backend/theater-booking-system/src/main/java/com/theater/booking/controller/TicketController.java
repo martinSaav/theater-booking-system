@@ -2,8 +2,8 @@ package com.theater.booking.controller;
 
 import com.theater.booking.dto.TicketRequestDTO;
 import com.theater.booking.dto.TicketResponseDTO;
-import com.theater.booking.exceptions.TicketNotFoundException;
 import com.theater.booking.exceptions.NotValidBodyException;
+import com.theater.booking.exceptions.TicketNotFoundException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;

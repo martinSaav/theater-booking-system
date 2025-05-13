@@ -3,8 +3,8 @@ package com.theater.booking.controller;
 
 import com.theater.booking.dto.CustomerRequestDTO;
 import com.theater.booking.dto.CustomerResponseDTO;
-import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.CustomerNotFoundException;
+import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;

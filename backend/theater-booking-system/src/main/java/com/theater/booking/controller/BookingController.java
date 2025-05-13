@@ -3,14 +3,13 @@ package com.theater.booking.controller;
 
 import com.theater.booking.dto.BookingRequestDTO;
 import com.theater.booking.dto.BookingResponseDTO;
-import com.theater.booking.exceptions.*;
+import com.theater.booking.exceptions.BusinessException;
+import com.theater.booking.exceptions.UnknownErrorException;
 import com.theater.booking.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +89,7 @@ public class BookingController {
         }
     }
 
-    @PutMapping( "/{id}")
+    @PutMapping("/{id}")
     @Operation(
             description = "Actualiza una reserva por id",
             parameters = {

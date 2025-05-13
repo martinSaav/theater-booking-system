@@ -9,7 +9,6 @@ import com.theater.booking.repository.AttendanceRepository;
 import com.theater.booking.repository.BookingRepository;
 import com.theater.booking.repository.CustomerRepository;
 import com.theater.booking.repository.TicketRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

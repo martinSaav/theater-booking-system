@@ -18,4 +18,8 @@ export class BookingService {
   create(booking: Booking) {
     return this.http.post<Booking>(this.baseUrl, booking);
   }
+
+  delete(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }
