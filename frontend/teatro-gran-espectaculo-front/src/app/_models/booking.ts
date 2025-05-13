@@ -1,5 +1,6 @@
 
 export interface Booking {
+    id?: number,
     customerEmail: string,
     customerName: string,
     customerPhone: string,

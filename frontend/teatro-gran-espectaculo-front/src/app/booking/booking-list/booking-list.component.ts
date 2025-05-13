@@ -31,4 +31,10 @@ export class BookingListComponent {
   toCreateBooking() {
     this.router.navigate(['/bookings/create']);
   }
+
+  deleteBooking(booking: Booking) {
+    this.bookingService.delete(booking.id!).subscribe(() => {
+      this.bookings = this.bookings.filter(b => b.id !== booking.id);
+    });
+  }
 }
