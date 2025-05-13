@@ -1,4 +1,5 @@
 [![Deploy to EC2](https://github.com/martinSaav/theater-booking-system/actions/workflows/deploy.yml/badge.svg)](https://github.com/martinSaav/theater-booking-system/actions/workflows/deploy.yml)
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/1xl31.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/teatro-gran-espectaculo-front)
 # Theater Booking System
 
