@@ -18,7 +18,7 @@
         <td>{{ booking.customerName }}</td>
         <td class="d-none d-md-table-cell">{{ booking.customerEmail }}</td>
         <td>{{ booking.eventName }}</td>
-        <td class="d-none d-md-table-cell">{{ booking.eventDate }}</td>
+        <td class="d-none d-md-table-cell">{{ booking.eventDate | date:'dd/MM/yyyy HH:mm' }}</td>
         <td class="d-none d-md-table-cell">{{ booking.ticketType }}</td>
         <td>
           <div class="d-flex flex-wrap gap-1">

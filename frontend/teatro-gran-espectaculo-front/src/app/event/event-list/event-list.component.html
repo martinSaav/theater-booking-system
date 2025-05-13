@@ -13,15 +13,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let e of events">
-        <td>{{ e.id }}</td>
-        <td>{{ e.name }}</td>
-        <td class="d-none d-md-table-cell">{{ e.dateTime }}</td>
-        <td class="d-none d-md-table-cell">{{ e.description }}</td>
+      <tr *ngFor="let event of events">
+        <td>{{ event.id }}</td>
+        <td>{{ event.name }}</td>
+        <td class="d-none d-md-table-cell">{{ event.dateTime | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td class="d-none d-md-table-cell">{{ event.description }}</td>
         <td>
           <div class="d-flex flex-wrap gap-1">
-            <button class="btn btn-sm btn-warning" (click)="toEventEdit(e)">Edit</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteEvent(e)">Delete</button>
+            <button class="btn btn-sm btn-warning" (click)="toEventEdit(event)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteEvent(event)">Delete</button>
           </div>
         </td>
       </tr>
