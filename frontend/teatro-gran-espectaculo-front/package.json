@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:prod": "ng build --configuration=production",
-    "start:prod": "ng serve --configuration=production"
+    "start:prod": "ng serve --configuration=production",  
+    "predeploy": "ng build --configuration=production --base-href=/theater-booking-system/",
+    "deploy": "gh-pages -d dist/teatro-gran-espectaculo-front"
   },
   "private": true,
   "dependencies": {
