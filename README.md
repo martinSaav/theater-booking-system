@@ -8,6 +8,7 @@ This project is a theater event booking system built with **Spring Boot 3** and 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
+- [Diagrams](#diagrams)
 - [Installation](#installation)
 - - [Backend](#backend)
 - - [Frontend](#frontend)
@@ -17,10 +18,17 @@ This project is a theater event booking system built with **Spring Boot 3** and 
 - [Author](#author)
 - [License](#license)
 
+### Diagrams
+Architecture diagram of the system
+![architecture-diagram](docs/architecture-diagram.png)
+Class diagram of the system
+![class-diagram](docs/theater-booking-system-class_diagram_v3.png)
+Diagram of the database
+![bdd](docs/theater-booking-system-bdd_v3.png)
 ### Features
 
-- CRUD for events (theater plays, concerts, talks)
-- CRUD for reservations (tickets)
+- CRUD for events, for the moment only Create, Read and Delete
+- CRUD for bookings, for the moment only Create, Read and Delete
 - Admin-oriented functionality
 - PostgreSQL as the database engine
 - Swagger UI for exploring and testing the API
