@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "29afaee1-7883-450f-b41c-41d6fc2e7d42",
+		"name": "Tickets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31088732",
+		"_collection_link": "https://martian-desert-381800.postman.co/workspace/Theater-Booking-System~f2fc0086-1d4d-4613-b3d6-01787646f2bf/collection/31088732-29afaee1-7883-450f-b41c-41d6fc2e7d42?action=share&source=collection_link&creator=31088732"
+	},
+	"item": [
+		{
+			"name": "Get all tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/events/tickets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"events",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post ticket",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"Campo\",\r\n    \"price\": 10000,\r\n    \"totalStock\": 10,\r\n    \"availableStock\": 10,\r\n    \"eventId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/events/tickets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"events",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
