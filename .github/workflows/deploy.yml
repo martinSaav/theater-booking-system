@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - dev  #Despues lo cambio a main
+      - main
 
 jobs:
   deploy:
