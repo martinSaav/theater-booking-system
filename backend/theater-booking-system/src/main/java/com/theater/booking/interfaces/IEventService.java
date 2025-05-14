@@ -1,7 +1,7 @@
 package com.theater.booking.interfaces;
 
 
-import com.theater.booking.dto.EventResponseDTO;
+import com.theater.booking.dto.response.EventResponseDTO;
 
 import java.util.List;
 

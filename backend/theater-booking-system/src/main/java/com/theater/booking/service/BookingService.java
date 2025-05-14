@@ -1,7 +1,7 @@
 package com.theater.booking.service;
 
-import com.theater.booking.dto.BookingRequestDTO;
-import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.dto.request.BookingRequestDTO;
+import com.theater.booking.dto.response.BookingResponseDTO;
 import com.theater.booking.exceptions.*;
 import com.theater.booking.interfaces.IBookingService;
 import com.theater.booking.model.*;
@@ -9,7 +9,6 @@ import com.theater.booking.repository.AttendanceRepository;
 import com.theater.booking.repository.BookingRepository;
 import com.theater.booking.repository.CustomerRepository;
 import com.theater.booking.repository.TicketRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public List<BookingResponseDTO> findAll() {
-        return bookingRepository.findAll().stream()
+        return bookingRepository.findAllByOrderByIdAsc().stream()
                 .map(BookingResponseDTO::new)
                 .toList();
     }

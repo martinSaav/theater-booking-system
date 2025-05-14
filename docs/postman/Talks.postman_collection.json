@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "9dc612df-50dd-443a-834d-f3c53dfdc21f",
+		"name": "Talks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31088732",
+		"_collection_link": "https://martian-desert-381800.postman.co/workspace/Theater-Booking-System~f2fc0086-1d4d-4613-b3d6-01787646f2bf/collection/31088732-9dc612df-50dd-443a-834d-f3c53dfdc21f?action=share&source=collection_link&creator=31088732"
+	},
+	"item": [
+		{
+			"name": "Get all talks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/events/talks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"events",
+						"talks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

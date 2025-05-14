@@ -1,10 +1,16 @@
 package com.theater.booking.service;
 
-import com.theater.booking.dto.BookingRequestDTO;
-import com.theater.booking.dto.BookingResponseDTO;
-import com.theater.booking.exceptions.*;
+import com.theater.booking.dto.request.BookingRequestDTO;
+import com.theater.booking.dto.response.BookingResponseDTO;
+import com.theater.booking.exceptions.BookingDeletionNotAllowedException;
+import com.theater.booking.exceptions.BookingNotFoundException;
+import com.theater.booking.exceptions.DuplicateAttendanceException;
+import com.theater.booking.exceptions.NoTicketsAvailableException;
 import com.theater.booking.model.*;
-import com.theater.booking.repository.*;
+import com.theater.booking.repository.AttendanceRepository;
+import com.theater.booking.repository.BookingRepository;
+import com.theater.booking.repository.CustomerRepository;
+import com.theater.booking.repository.TicketRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,11 +18,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class BookingServiceTest {
 

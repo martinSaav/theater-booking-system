@@ -1,7 +1,7 @@
 package com.theater.booking.service;
 
-import com.theater.booking.dto.ConcertRequestDTO;
-import com.theater.booking.dto.ConcertResponseDTO;
+import com.theater.booking.dto.request.ConcertRequestDTO;
+import com.theater.booking.dto.response.ConcertResponseDTO;
 import com.theater.booking.interfaces.IConcertService;
 import com.theater.booking.model.Concert;
 import com.theater.booking.repository.ConcertRepository;

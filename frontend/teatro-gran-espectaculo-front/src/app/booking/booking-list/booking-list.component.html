@@ -1,27 +1,32 @@
- <h2 class="mb-4">Manage Booking</h2>
-    <button class="btn btn-primary mb-3" (click)="toCreateBooking()">Create Booking</button>
-    <table class="table table-striped" *ngIf="bookings.length">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Event Name</th>
-          <th>Event Date</th>
-          <th>Ticket Type</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let booking of bookings">
-          <td>{{ booking.customerName }}</td>
-          <td>{{ booking.customerEmail }}</td>
-          <td>{{ booking.eventName }}</td>
-          <td>{{ booking.eventDate }}</td>
-          <td>{{ booking.ticketType }}</td>
-          <td>
+<h2 class="mb-4">Manage Booking</h2>
+<button class="btn btn-primary mb-3" (click)="toCreateBooking()">Create Booking</button>
+
+<div class="table-responsive">
+  <table class="table table-striped" *ngIf="bookings.length">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="d-none d-md-table-cell">Email</th>
+        <th>Event</th>
+        <th class="d-none d-md-table-cell">Date</th>
+        <th class="d-none d-md-table-cell">Ticket type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.customerName }}</td>
+        <td class="d-none d-md-table-cell">{{ booking.customerEmail }}</td>
+        <td>{{ booking.eventName }}</td>
+        <td class="d-none d-md-table-cell">{{ booking.eventDate | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td class="d-none d-md-table-cell">{{ booking.ticketType }}</td>
+        <td>
+          <div class="d-flex flex-wrap gap-1">
             <button class="btn btn-sm btn-warning">Edit</button>
-            <button class="btn btn-sm btn-danger ms-2">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <button class="btn btn-sm btn-danger" (click)="deleteBooking(booking)">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

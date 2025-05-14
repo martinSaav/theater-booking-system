@@ -6,7 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:prod": "ng build --configuration=production",
+    "start:prod": "ng serve --configuration=production",  
+    "predeploy": "ng build --configuration=production ",
+    "deploy": "cp vercel.json dist/teatro-gran-espectaculo-front/ && cd dist/teatro-gran-espectaculo-front && vercel --prod"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
+    "gh-pages": "^6.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

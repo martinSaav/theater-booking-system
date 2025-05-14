@@ -1,4 +1,4 @@
-package com.theater.booking.dto;
+package com.theater.booking.dto.request;
 
 
 import jakarta.validation.constraints.Email;

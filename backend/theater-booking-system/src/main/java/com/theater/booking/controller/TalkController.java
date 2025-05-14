@@ -1,7 +1,7 @@
 package com.theater.booking.controller;
 
-import com.theater.booking.dto.TalkRequestDTO;
-import com.theater.booking.dto.TalkResponseDTO;
+import com.theater.booking.dto.request.TalkRequestDTO;
+import com.theater.booking.dto.response.TalkResponseDTO;
 import com.theater.booking.exceptions.EventNotFoundException;
 import com.theater.booking.exceptions.NotValidBodyException;
 import com.theater.booking.exceptions.UnknownErrorException;

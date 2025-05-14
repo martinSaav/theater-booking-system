@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "91914880-5433-4ba3-9a9a-c75620d01631",
+		"name": "Customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31088732",
+		"_collection_link": "https://martian-desert-381800.postman.co/workspace/Theater-Booking-System~f2fc0086-1d4d-4613-b3d6-01787646f2bf/collection/31088732-91914880-5433-4ba3-9a9a-c75620d01631?action=share&source=collection_link&creator=31088732"
+	},
+	"item": [
+		{
+			"name": "Get all customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

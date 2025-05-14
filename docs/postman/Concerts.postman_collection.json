@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "f801680c-39c1-4677-ae54-bd8bb99567dc",
+		"name": "Concerts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31088732",
+		"_collection_link": "https://martian-desert-381800.postman.co/workspace/Theater-Booking-System~f2fc0086-1d4d-4613-b3d6-01787646f2bf/collection/31088732-f801680c-39c1-4677-ae54-bd8bb99567dc?action=share&source=collection_link&creator=31088732"
+	},
+	"item": [
+		{
+			"name": "Get all concerts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/events/concerts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"events",
+						"concerts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Invalid data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"a\",\r\n  \"dateTime\": \"\",\r\n  \"description\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/events/concerts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"events",
+						"concerts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

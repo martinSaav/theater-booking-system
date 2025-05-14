@@ -1,8 +1,8 @@
 package com.theater.booking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.theater.booking.dto.BookingRequestDTO;
-import com.theater.booking.dto.BookingResponseDTO;
+import com.theater.booking.dto.request.BookingRequestDTO;
+import com.theater.booking.dto.response.BookingResponseDTO;
 import com.theater.booking.exceptions.BookingDeletionNotAllowedException;
 import com.theater.booking.exceptions.BookingNotFoundException;
 import com.theater.booking.exceptions.DuplicateAttendanceException;
@@ -16,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 

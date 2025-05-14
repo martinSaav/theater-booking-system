@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "f4cde4be-b470-45d6-939b-b72f3ae1c997",
+		"name": "Booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31088732",
+		"_collection_link": "https://martian-desert-381800.postman.co/workspace/Theater-Booking-System~f2fc0086-1d4d-4613-b3d6-01787646f2bf/collection/31088732-f4cde4be-b470-45d6-939b-b72f3ae1c997?action=share&source=collection_link&creator=31088732"
+	},
+	"item": [
+		{
+			"name": "Get all bookings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post booking",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerEmail\": \"auroramendoza0602@hotmail.com\",\r\n    \"customerName\": \"Aurora\",\r\n    \"customerPhone\": \"1232321\",\r\n    \"bookingDate\": \"2025-09-02T19:00:00\",\r\n    \"ticketId\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

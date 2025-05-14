@@ -1,25 +1,30 @@
- <h2 class="mb-4">Manage Events</h2>
-    <button class="btn btn-primary mb-3" (click)="toCreateEvent()">Create Event</button>
-    <table class="table table-striped" *ngIf="events.length">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let e of events">
-          <td>{{ e.id }}</td>
-          <td>{{ e.name }}</td>
-          <td>{{ e.dateTime }}</td>
-          <td>{{ e.description }}</td>
-          <td>
-            <button class="btn btn-sm btn-warning" (click) ="toEventEdit(e)">Edit</button>
-            <button class="btn btn-sm btn-danger ms-2" (click) = "deleteEvent(e)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<h2 class="mb-4">Manage Events</h2>
+<button class="btn btn-primary mb-3" (click)="toCreateEvent()">Create Event</button>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th class="d-none d-md-table-cell">Date</th>
+        <th class="d-none d-md-table-cell">Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.id }}</td>
+        <td>{{ event.name }}</td>
+        <td class="d-none d-md-table-cell">{{ event.dateTime | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td class="d-none d-md-table-cell">{{ event.description }}</td>
+        <td>
+          <div class="d-flex flex-wrap gap-1">
+            <button class="btn btn-sm btn-warning" (click)="toEventEdit(event)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteEvent(event)">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
